@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "716526511155",
+    "project_id": "bb-react-4f0d5",
+    "storage_bucket": "bb-react-4f0d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716526511155:android:f9f107a18924126926af46",
+        "android_client_info": {
+          "package_name": "com.bbreact"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716526511155-icdqv3s5eqna0qthkvr7ql333147tehf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbreact",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "716526511155-gpactg5i1ugftv84daa4f2q98hf97eo3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3AARsmCLEDDzqnkK45kRO7tqyb97fRd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716526511155-gpactg5i1ugftv84daa4f2q98hf97eo3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "716526511155-m564n1muokoa32crgi3v8vg659p827tr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.BBreact"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
