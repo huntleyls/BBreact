@@ -18,8 +18,10 @@ import {
   collection,
   doc,
   addDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import SelectDropdown from 'react-native-select-dropdown';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Item {
   itemId: string;
@@ -69,6 +71,20 @@ const SetSpecials: React.FC = () => {
       setDescription('');
       setDay('');
 
+      fetchData();
+    }
+  };
+
+  const deleteItem = async (dayy: string, itemId: string) => {
+    if (barType) {
+      // Ensure barType is accessible in this scope.
+      const specialsRef = doc(FIRESTORE, 'Specials', barType);
+      const itemDocRef = doc(specialsRef, 'days', dayy, 'items', itemId);
+
+      // Delete the item from Firestore
+      await deleteDoc(itemDocRef);
+
+      // Update the UI by fetching the data again
       fetchData();
     }
   };
@@ -156,11 +172,21 @@ const SetSpecials: React.FC = () => {
       <SectionList
         sections={sections}
         keyExtractor={item => item.itemId}
-        renderItem={({item}) => (
+        renderItem={({item, section}) => (
           <View style={styles.itemContainer}>
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text>Price: ${item.price}</Text>
-            <Text>Description: {item.description}</Text>
+            <View style={styles.itemInfo}>
+              <Text style={styles.itemName}>{item.name}</Text>
+              <Text>Price: ${item.price}</Text>
+              <Text>Description: {item.description}</Text>
+            </View>
+            <Icon
+              name="trash-outline"
+              size={24}
+              color="red"
+              onPress={() =>
+                deleteItem(section.title.toLowerCase(), item.itemId)
+              }
+            />
           </View>
         )}
         renderSectionHeader={({section: {title}}) => (
@@ -208,6 +234,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   itemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 15,
     padding: 10,
     borderRadius: 5,
@@ -225,6 +254,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 5,
+  },
+  itemInfo: {
+    flex: 1,
   },
 });
 
