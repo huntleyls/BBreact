@@ -69,7 +69,6 @@ const SetSpecials: React.FC = () => {
       setName('');
       setPrice('');
       setDescription('');
-      setDay('');
 
       fetchData();
     }
@@ -103,7 +102,7 @@ const SetSpecials: React.FC = () => {
       let allItems: DailyItems = {};
 
       for (let days of daysOfWeek) {
-        const specialsRef = doc(FIRESTORE, 'Specials', 'BS');
+        const specialsRef = doc(FIRESTORE, 'Specials', barType);
         const itemsCollectionRef = collection(
           specialsRef,
           'days',

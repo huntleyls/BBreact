@@ -3,6 +3,8 @@ import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {FIRESTORE} from '../../../../FirebaseConfig';
 import {collection, getDocs} from 'firebase/firestore';
 
+import SmallBannerAd from '../../common/ads/SmallBannerAd';
+
 const LineTimes: React.FC = () => {
   const [lineTimes, setLineTimes] = useState<Array<any>>([]);
 
@@ -37,6 +39,7 @@ const LineTimes: React.FC = () => {
           </View>
         )}
       />
+      <SmallBannerAd />
     </View>
   );
 };
@@ -44,39 +47,32 @@ const LineTimes: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f7fb',
-    paddingHorizontal: 10,
-    paddingTop: 20,
+    backgroundColor: '#f5f5f5', // Match background color
   },
   headerText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 20,
+    color: 'white',
+    backgroundColor: '#001f3f', // Match header style
+    padding: 8,
+    textAlign: 'center', // Center align text
   },
   card: {
     backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 8,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc', // Style similar to itemContainer
+    marginBottom: 15,
   },
   barName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#4A90E2',
+    marginBottom: 8,
+    color: '#001f3f', // Match name style
   },
   time: {
-    marginTop: 10,
-    fontSize: 16,
-    color: '#666',
+    fontSize: 14,
+    color: '#333', // Match description style
   },
 });
 

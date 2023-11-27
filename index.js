@@ -10,6 +10,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import 'react-native-gesture-handler';
 
 
+
 const AppComponent = () => (
     <NavigationContainer>
         <App />

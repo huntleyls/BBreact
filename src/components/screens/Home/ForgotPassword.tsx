@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, StyleSheet, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import {FIREBASE_AUTH} from '../../../../FirebaseConfig';
 import {sendPasswordResetEmail} from 'firebase/auth';
 
@@ -36,7 +43,9 @@ const ForgotPassword: React.FC = () => {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <Button title="Submit" onPress={handlePasswordReset} />
+      <TouchableOpacity style={styles.button} onPress={handlePasswordReset}>
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
       <Text style={styles.message}>{message}</Text>
     </View>
   );
@@ -46,22 +55,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    padding: 16,
+    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 24,
+    fontWeight: 'bold',
+    color: '#001f3f',
+    alignSelf: 'center',
     marginBottom: 20,
   },
   input: {
-    width: '100%',
-    padding: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
-    marginBottom: 20,
+    borderColor: '#001f3f',
+    padding: 12,
+    marginBottom: 10,
+    borderRadius: 5,
+    width: '100%',
+  },
+  button: {
+    backgroundColor: '#001f3f',
+    padding: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   },
   message: {
     marginTop: 20,
+    color: '#001f3f',
   },
 });
 

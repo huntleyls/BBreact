@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
-import {getAuth, onAuthStateChanged} from 'firebase/auth';
-import {doc, getDoc} from 'firebase/firestore';
-import {FIRESTORE} from '../../../../FirebaseConfig';
+import React, { useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { FIRESTORE } from '../../../../FirebaseConfig';
 
 const auth = getAuth();
 const firestore = FIRESTORE;
 
 export function useAuth() {
-  const [user, setUser] = React.useState<string>();
-  const [userType, setUserType] = React.useState<string>();
-  const [barType, setBarType] = React.useState<string>();
+  const [user, setUser] = useState<string | undefined>();
+  const [userType, setUserType] = useState<string | undefined>();
+  const [barType, setBarType] = useState<string | undefined>();
 
   useEffect(() => {
     const unsubscribeFromAuthStateChanged = onAuthStateChanged(
@@ -33,9 +33,19 @@ export function useAuth() {
     return unsubscribeFromAuthStateChanged;
   }, []);
 
+  const signOutUser = async () => {
+    try {
+      await signOut(auth);
+      // Optional: Add any additional logic after sign out, like navigation
+    } catch (error) {
+      // Handle errors here, such as displaying a notification
+    }
+  };
+
   return {
     user,
     userType,
     barType,
+    signOutUser, // Expose the signOut function
   };
 }

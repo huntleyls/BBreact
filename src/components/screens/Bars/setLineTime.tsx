@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useAuth} from '../../common/hooks/useAuth';
 import {FIRESTORE} from '../../../../FirebaseConfig';
 import {
@@ -103,7 +103,8 @@ const SetLineTime: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Set Line Time for {barName}</Text>
+      <Text style={styles.headerText}>Set Line Time for</Text>
+      <Text style={styles.headerText}>{barName}</Text>
       <Text style={styles.subHeaderText}>
         Current Line Time: {hours} hours, {minutes} minutes
       </Text>
@@ -132,21 +133,19 @@ const SetLineTime: React.FC = () => {
         />
       </View>
 
-      <Button
-        title="Save"
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => {
           if (selectedHours !== null && selectedMinutes !== null) {
             saveTime(selectedHours, selectedMinutes);
           }
-        }}
-        style={styles.buttonStyle}
-      />
+        }}>
+        <Text style={styles.buttonText}>Save</Text>
+      </TouchableOpacity>
 
-      <Button
-        title="Clear"
-        onPress={() => saveTime(0, 0)}
-        style={styles.buttonStyle}
-      />
+      <TouchableOpacity style={styles.button} onPress={() => saveTime(0, 0)}>
+        <Text style={styles.buttonText}>Clear</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -154,20 +153,22 @@ const SetLineTime: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    paddingHorizontal: 20,
-    paddingTop: 40,
+    justifyContent: 'center',
+    padding: 16,
+    backgroundColor: '#f5f5f5',
   },
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 15,
+    color: '#001f3f',
+    alignSelf: 'center',
+    marginBottom: 20,
   },
   subHeaderText: {
     fontSize: 18,
-    color: 'grey',
-    marginBottom: 25,
+    color: '#333',
+    alignSelf: 'center',
+    marginBottom: 20,
   },
   selectionContainer: {
     flexDirection: 'row',
@@ -178,20 +179,25 @@ const styles = StyleSheet.create({
   selectionLabel: {
     fontSize: 16,
     color: '#555',
+    marginRight: 10, // Adjust the margin to bring the label closer to the dropdown
   },
   dropdownStyle: {
     width: 120,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+    borderBottomColor: '#001f3f',
+    backgroundColor: 'white',
   },
-  buttonStyle: {
+  button: {
+    backgroundColor: '#001f3f',
     padding: 12,
-    borderRadius: 6,
-    backgroundColor: '#3498db',
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+    minWidth: 100,
+  },
+  buttonText: {
     color: 'white',
-    textAlign: 'center',
     fontSize: 16,
-    marginTop: 20,
   },
 });
 

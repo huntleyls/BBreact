@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
-  Button,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  Alert,
+  StyleSheet,
 } from 'react-native';
 import {FIREBASE_AUTH} from '../../../../FirebaseConfig';
 import {signInWithEmailAndPassword} from 'firebase/auth';
@@ -20,22 +21,24 @@ const BarLoginScreen: React.FC<BarLoginScreenProps> = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const auth = FIREBASE_AUTH;
 
   const signIn = async () => {
-    const loweredEmail = email.toLowerCase();
+    setErrorMessage('');
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(
         auth,
-        loweredEmail,
+        email.toLowerCase(),
         password,
       );
       console.log(response);
-      // Optionally: Navigate or do something on successful login
+      // Navigate to next screen or handle login success
     } catch (error) {
       console.log(error);
-      // Optionally: Display an error message to the user
+      setErrorMessage(error.message);
+      Alert.alert('Login Failed', error.message);
     } finally {
       setLoading(false);
     }
@@ -43,12 +46,13 @@ const BarLoginScreen: React.FC<BarLoginScreenProps> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Bar Login</Text>
       <TextInput
         style={styles.input}
         value={email}
         placeholder="Email"
         autoCapitalize="none"
-        onChangeText={text => setEmail(text)}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
@@ -56,39 +60,77 @@ const BarLoginScreen: React.FC<BarLoginScreenProps> = ({navigation}) => {
         value={password}
         placeholder="Password"
         autoCapitalize="none"
-        onChangeText={text => setPassword(text)}
+        onChangeText={setPassword}
       />
+      {errorMessage ? (
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      ) : null}
       {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#001f3f" />
       ) : (
-        <Button title="Login" onPress={signIn} />
+        <TouchableOpacity style={styles.button} onPress={signIn}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
       )}
-      <Button
-        title="Create Account"
-        onPress={() => navigation.navigate('BarRegisterScreen')}
-      />
-      <Button
-        title="Forgot Password"
-        onPress={() => navigation.navigate('ForgotPassword')}
-      />
+      <TouchableOpacity
+        style={styles.linkButton}
+        onPress={() => navigation.navigate('RegisterScreen')}>
+        <Text style={styles.linkButtonText}>Create Account</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.linkButton}
+        onPress={() => navigation.navigate('ForgotPassword')}>
+        <Text style={styles.linkButtonText}>Forgot Password?</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     padding: 16,
     backgroundColor: '#f5f5f5',
   },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#001f3f',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
   input: {
     borderWidth: 1,
-    borderColor: 'gray',
-    padding: 8,
+    borderColor: '#001f3f',
+    padding: 12,
     marginBottom: 10,
     borderRadius: 5,
   },
-};
+  button: {
+    backgroundColor: '#001f3f',
+    padding: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  linkButton: {
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  linkButtonText: {
+    color: '#001f3f',
+    fontSize: 14,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+});
 
 export default BarLoginScreen;

@@ -1,55 +1,55 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-type CustomerHomeProps = {
-  navigation: {
-    navigate: (screen: string) => void;
-  };
-};
+// Import the customer screens
+import CalendarScreen from './Calendar';
+import LineTimes from './getLineTime';
+import BarTypeSelection from './BarSelection';
+import GetSpecials from './getSpecials';
+import CustomerAccountScreen from './CustomerAccount';
 
-const CustomerHome = ({navigation}: CustomerHomeProps) => {
-  const handleCalendarPress = () => {
-    navigation.navigate('Calendar');
-  };
+const CustomerTab = createBottomTabNavigator();
 
-  const handleLineTimesPress = () => {
-    navigation.navigate('LineTimes'); // Ensure 'LineTimes' is the correct route name for your LineTimes page.
-  };
-
+const CustomerTabNavigator = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Customer Home</Text>
-      <TouchableOpacity style={styles.button} onPress={handleCalendarPress}>
-        <Text style={styles.buttonText}>Go to Calendar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleLineTimesPress}>
-        <Text style={styles.buttonText}>Go to Line Times</Text>
-      </TouchableOpacity>
-    </View>
+    <CustomerTab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({color, size}) => {
+          let iconName;
+
+          if (route.name === 'Calendar') {
+            iconName = 'calendar';
+          } else if (route.name === 'LineTimes') {
+            iconName = 'clock-o';
+          } else if (route.name === 'BarSelection') {
+            iconName = 'glass';
+          } else if (route.name === 'CustomerAccount') {
+            iconName = 'star';
+          }
+
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray',
+      })}>
+      <CustomerTab.Screen name="Calendar" component={CalendarScreen} />
+      <CustomerTab.Screen
+        name="LineTimes"
+        component={LineTimes}
+        options={{headerShown: false}}
+      />
+      <CustomerTab.Screen
+        name="BarSelection"
+        component={BarTypeSelection}
+        options={{headerShown: false}}
+      />
+      <CustomerTab.Screen
+        name="CustomerAccount"
+        component={CustomerAccountScreen}
+      />
+    </CustomerTab.Navigator>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  button: {
-    marginVertical: 10,
-    padding: 15,
-    backgroundColor: '#2196F3',
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-});
-
-export default CustomerHome;
+export default CustomerTabNavigator;
