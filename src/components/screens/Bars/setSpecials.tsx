@@ -8,6 +8,7 @@ import {
   ScrollView,
   SectionList,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import {useAuth} from '../../common/hooks/useAuth';
 import {FIRESTORE} from '../../../../FirebaseConfig';
@@ -165,7 +166,9 @@ const SetSpecials: React.FC = () => {
             return item.label;
           }}
         />
-        <Button title="Add Item" onPress={addItem} />
+        <TouchableOpacity style={styles.button} onPress={addItem}>
+          <Text style={styles.buttonText}>Add Item</Text>
+        </TouchableOpacity>
       </View>
 
       <SectionList
@@ -199,63 +202,104 @@ const SetSpecials: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#F3F4F6', // Light grayish background
+    justifyContent: 'center',
+    padding: 16,
+    backgroundColor: '#f5f5f5',
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#001f3f',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  subHeaderText: {
+    fontSize: 18,
+    color: '#333',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  selectionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  selectionLabel: {
+    fontSize: 16,
+    color: '#555',
+    marginRight: 10, // Adjust the margin to bring the label closer to the dropdown
+  },
+  dropdownStyle: {
+    width: 120,
+    borderBottomWidth: 1,
+    borderBottomColor: '#001f3f',
+    backgroundColor: 'white',
+  },
+  button: {
+    backgroundColor: '#001f3f',
+    padding: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    minWidth: 100,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  // New styles for your existing components
+  input: {
+    // Define styles for your TextInput components
+    borderBottomWidth: 1,
+    borderColor: '#001f3f',
+    padding: 10,
+    marginBottom: 10,
+    fontSize: 16,
   },
   formContainer: {
-    marginBottom: 30,
-    borderRadius: 5,
-    backgroundColor: '#FFFFFF', // White background for the form
+    // Style for the form container
+    backgroundColor: 'white',
     padding: 20,
-    shadowColor: '#000', // Drop shadow for form container
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  input: {
-    borderBottomWidth: 2,
-    marginBottom: 15,
-    padding: 10,
-    fontSize: 16,
-    borderColor: '#E5E7EB', // Light gray border for inputs
-  },
-  dayHeading: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 15,
-    color: '#111827', // Almost black text color
-    backgroundColor: '#D1D5DB', // Light gray background for day headings
-    padding: 10,
     borderRadius: 5,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   itemContainer: {
+    // Style for each item in the list
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 15,
     padding: 10,
+    backgroundColor: 'white',
+    marginBottom: 10,
     borderRadius: 5,
-    backgroundColor: '#FFFFFF', // White background for each item
-    shadowColor: '#000', // Drop shadow for items
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
-  },
-  itemName: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginBottom: 5,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   itemInfo: {
+    // Styles for the text inside each item
     flex: 1,
+    marginRight: 10,
+  },
+  itemName: {
+    // Styles for the item name
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  dayHeading: {
+    // Styles for day headings in your SectionList
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
 });
 

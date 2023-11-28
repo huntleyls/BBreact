@@ -2,6 +2,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import CustomerTabNavigator from '../components/screens/Customers/CustomerHome'; // Adjust the path accordingly
 import GetSpecials from '../components/screens/Customers/getSpecials'; // Adjust the path accordingly
 import {GetSpecialsRouteParams} from '../components/screens/Customers/getSpecials';
+import ChangePassword from '../components/screens/Customers/ChangePassword';
+import FeedbackComponent from '../components/screens/Customers/Feedback';
 type UserStackParamList = {
   CustomerHome: undefined; // No parameters expected for CustomerHome
   GetSpecials: GetSpecialsRouteParams; // Use the type defined earlier
@@ -13,6 +15,11 @@ export default function UserStack() {
   return (
     <Stack.Navigator
       screenOptions={{
+        headerBackTitle: 'Back',
+        headerTintColor: '#001f3f', // sets color of back button and header buttons
+        headerTitleStyle: {
+          color: '#001f3f', // sets color of header title
+        },
         cardStyle: {
           backgroundColor: 'white',
         },
@@ -22,7 +29,21 @@ export default function UserStack() {
         component={CustomerTabNavigator}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="GetSpecials" component={GetSpecials} />
+      <Stack.Screen
+        name="GetSpecials"
+        component={GetSpecials}
+        options={{title: 'Specials'}}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{title: 'Change Password'}}
+      />
+      <Stack.Screen
+        name="Feedback"
+        component={FeedbackComponent}
+        options={{title: 'Feedback'}}
+      />
       {/* ... other screens ... */}
     </Stack.Navigator>
   );

@@ -8,6 +8,8 @@ const firestore = FIRESTORE;
 
 export function useAuth() {
   const [user, setUser] = useState<string | undefined>();
+  const [userName, setUserName] = useState<string | undefined>();
+  const [userEmail, setUserEmail] = useState<string | undefined>();
   const [userType, setUserType] = useState<string | undefined>();
   const [barType, setBarType] = useState<string | undefined>();
 
@@ -20,10 +22,14 @@ export function useAuth() {
           const userDocSnapshot = await getDoc(userDoc);
           const data = userDocSnapshot.data();
           setUser(firebaseUser.uid);
+          setUserName(data?.firstName);
+          setUserEmail(data?.Email);
           setUserType(data?.userType);
           setBarType(data?.Bar);
         } else {
           setUser(undefined);
+          setUserName(undefined);
+          setUserEmail(undefined);
           setUserType(undefined);
           setBarType(undefined);
         }
@@ -44,7 +50,9 @@ export function useAuth() {
 
   return {
     user,
+    userName,
     userType,
+    userEmail,
     barType,
     signOutUser, // Expose the signOut function
   };

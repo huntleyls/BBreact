@@ -1,16 +1,77 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {useAuth} from '../../common/hooks/useAuth';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-const CustomerAccountScreen = () => {
+type RootStackParamList = {
+  ChangePasswordScreen: undefined;
+  // ... other route names
+};
+
+type CustomerAccountScreenProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'ChangePassword'>;
+};
+
+const CustomerAccountScreen = ({navigation}) => {
   const {signOutUser} = useAuth();
 
+  const {userName} = useAuth();
+
+  const navigateToChangePassword = () => {
+    navigation.navigate('ChangePassword'); // Use the correct screen name as defined in your navigator
+  };
+
+  const navigateToFeedback = () => {
+    navigation.navigate('Feedback'); // Use the correct screen name as defined in your navigator
+  };
+
   return (
-    <View>
-      {/* Other account-related content */}
-      <Button title="Sign Out" onPress={signOutUser} />
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Hi {userName}</Text>
+      <View style={styles.menu}>
+        <TouchableOpacity style={styles.menuItem} onPress={navigateToFeedback}>
+          <Text style={styles.menuItemText}>Feedback</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={navigateToChangePassword}>
+          <Text style={styles.menuItemText}>Change Password</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem} onPress={signOutUser}>
+          <Text style={styles.menuItemText}>Sign Out</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  headerText: {
+    fontSize: 18,
+
+    padding: 8,
+    textAlign: 'center',
+    margin: 5,
+  },
+  menu: {
+    marginTop: 20,
+  },
+  menuItem: {
+    backgroundColor: 'white',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  menuItemText: {
+    fontSize: 16,
+    color: '#001f3f',
+    textAlign: 'left',
+  },
+  // ... other styles from your Boone Bars app
+});
 
 export default CustomerAccountScreen;

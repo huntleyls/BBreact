@@ -18,13 +18,13 @@ const BottomTabNavigator = () => {
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
-          if (route.name === 'SetLineTime') {
+          if (route.name === 'Line Time') {
             iconName = 'timer-sand';
-          } else if (route.name === 'NumberComponent') {
+          } else if (route.name === 'Head Count') {
             iconName = 'counter';
-          } else if (route.name === 'SetSpecials') {
+          } else if (route.name === 'Set Specials') {
             iconName = 'sale';
-          } else if (route.name === 'SetCalendar') {
+          } else if (route.name === 'Calendar') {
             iconName = 'calendar';
           } else if (route.name === 'Account') {
             iconName = 'account-circle-outline'; // Choose an appropriate icon for the account tab
@@ -32,31 +32,25 @@ const BottomTabNavigator = () => {
 
           return <Icon name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'tomato',
+        tabBarActiveTintColor: '#ffdc00',
         tabBarInactiveTintColor: 'gray',
+        tabBarActiveBackgroundColor: '#001f3f',
       })}>
       <Tab.Screen
-        name="SetLineTime"
+        name="Line Time"
         component={SetLineTime}
         options={{
           headerShown: false,
         }}
       />
       <Tab.Screen
-        name="NumberComponent"
+        name="Head Count"
         component={NumberComponent}
         options={{
           headerShown: false,
         }}
       />
-      <Tab.Screen
-        name="SetSpecials"
-        component={SetSpecials}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen name="SetCalendar" component={SetCalendar} />
+      <Tab.Screen name="Calendar" component={SetCalendar} />
       <Tab.Screen name="Account" component={Account} />
       {/* Add the new Account tab */}
     </Tab.Navigator>

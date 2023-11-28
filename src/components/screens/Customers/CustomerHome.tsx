@@ -20,34 +20,24 @@ const CustomerTabNavigator = () => {
 
           if (route.name === 'Calendar') {
             iconName = 'calendar';
-          } else if (route.name === 'LineTimes') {
+          } else if (route.name === 'Line Times') {
             iconName = 'clock-o';
-          } else if (route.name === 'BarSelection') {
+          } else if (route.name === 'Bars') {
             iconName = 'glass';
-          } else if (route.name === 'CustomerAccount') {
-            iconName = 'star';
+          } else if (route.name === 'Account') {
+            iconName = 'user';
           }
 
           return <Icon name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'tomato',
+        tabBarActiveTintColor: '#ffdc00',
         tabBarInactiveTintColor: 'gray',
+        tabBarActiveBackgroundColor: '#001f3f',
       })}>
+      <CustomerTab.Screen name="Line Times" component={LineTimes} />
       <CustomerTab.Screen name="Calendar" component={CalendarScreen} />
-      <CustomerTab.Screen
-        name="LineTimes"
-        component={LineTimes}
-        options={{headerShown: false}}
-      />
-      <CustomerTab.Screen
-        name="BarSelection"
-        component={BarTypeSelection}
-        options={{headerShown: false}}
-      />
-      <CustomerTab.Screen
-        name="CustomerAccount"
-        component={CustomerAccountScreen}
-      />
+      <CustomerTab.Screen name="Bars" component={BarTypeSelection} />
+      <CustomerTab.Screen name="Account" component={CustomerAccountScreen} />
     </CustomerTab.Navigator>
   );
 };

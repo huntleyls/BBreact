@@ -238,14 +238,15 @@ const CalendarScreen = () => {
               <View style={styles.itemContainer}>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.description}>
-                  Date: {item.date.toDate().toLocaleDateString()}
+                  {item.date.toDate().toLocaleDateString()}
                 </Text>
                 <Text style={styles.description}>
-                  Time: {item.date.toDate().toLocaleTimeString()}
+                  {item.date.toDate().toLocaleTimeString([], {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                  })}
                 </Text>
-                <Text style={styles.description}>
-                  Description: {item.description}
-                </Text>
+                <Text style={styles.description}>{item.description}</Text>
                 <Text style={styles.description}>Attending: {item.count}</Text>
                 <TouchableOpacity
                   style={styles.button}

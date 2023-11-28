@@ -27,7 +27,6 @@ const LineTimes: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Line Times</Text>
       <FlatList
         data={lineTimes}
         renderItem={({item}) => (
@@ -55,6 +54,7 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: '#001f3f', // Match header style
     padding: 8,
+    paddingTop: 16, // Increased top padding to bring the header down
     textAlign: 'center', // Center align text
   },
   card: {

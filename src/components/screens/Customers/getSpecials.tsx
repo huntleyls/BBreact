@@ -86,19 +86,17 @@ const GetSpecials: React.FC<GetSpecialsProps> = ({route}) => {
   }, [bartype]);
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Weekly Specials</Text>
       <SectionList
         sections={sections}
         keyExtractor={item => item.itemId}
         renderItem={({item}) => (
           <View style={styles.itemContainer}>
             <Text style={styles.itemName}>
-              ${item.price} {item.name}
+              {item.price > 0 ? `$${item.price} ` : ''}
+              {item.name}
             </Text>
             {item.description !== '' && (
-              <Text style={styles.description}>
-                Description: {item.description}
-              </Text>
+              <Text style={styles.description}>{item.description}</Text>
             )}
           </View>
         )}
