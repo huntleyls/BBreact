@@ -1,23 +1,50 @@
-import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Text} from 'react-native';
-import CustomerHome from '../components/screens/Customers/CustomerHome';
-import CalendarScreen from '../components/screens/Customers/Calendar';
-import LineTimes from '../components/screens/Customers/getLineTime';
+import CustomerTabNavigator from '../components/screens/Customers/CustomerHome'; // Adjust the path accordingly
+import GetSpecials from '../components/screens/Customers/getSpecials'; // Adjust the path accordingly
+import {GetSpecialsRouteParams} from '../components/screens/Customers/getSpecials';
+import ChangePassword from '../components/screens/Customers/ChangePassword';
+import FeedbackComponent from '../components/screens/Customers/Feedback';
+type UserStackParamList = {
+  CustomerHome: undefined; // No parameters expected for CustomerHome
+  GetSpecials: GetSpecialsRouteParams; // Use the type defined earlier
+  // ...other screens with their respective param types
+};
+const Stack = createStackNavigator<UserStackParamList>();
 
-const Stack = createStackNavigator();
-
-export default function userStack() {
+export default function UserStack() {
   return (
     <Stack.Navigator
       screenOptions={{
+        headerBackTitle: 'Back',
+        headerTintColor: '#001f3f', // sets color of back button and header buttons
+        headerTitleStyle: {
+          color: '#001f3f', // sets color of header title
+        },
         cardStyle: {
           backgroundColor: 'white',
         },
       }}>
-      <Stack.Screen name="CustomerHome" component={CustomerHome} />
-      <Stack.Screen name="Calendar" component={CalendarScreen} />
-      <Stack.Screen name="LineTimes" component={LineTimes} />
+      <Stack.Screen
+        name="CustomerHome"
+        component={CustomerTabNavigator}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GetSpecials"
+        component={GetSpecials}
+        options={{title: 'Specials'}}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{title: 'Change Password'}}
+      />
+      <Stack.Screen
+        name="Feedback"
+        component={FeedbackComponent}
+        options={{title: 'Feedback'}}
+      />
+      {/* ... other screens ... */}
     </Stack.Navigator>
   );
 }

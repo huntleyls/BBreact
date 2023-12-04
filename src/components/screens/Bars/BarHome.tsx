@@ -1,56 +1,60 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-type BarHomeProps = {
-  navigation: {
-    navigate: (screen: string) => void;
-  };
-};
+// Import your tab screens
+import SetLineTime from './setLineTime';
+import NumberComponent from './HeadCount';
+import SetSpecials from './setSpecials';
+import SetCalendar from './SetCalendar';
+import Account from './Account'; // Import the new Account component
 
-const BarHome = ({navigation}: BarHomeProps) => {
-  const handleLinePress = () => {
-    navigation.navigate('SetLineTime');
-  };
+const Tab = createBottomTabNavigator();
 
-  const handleCountPress = () => {
-    navigation.navigate('NumberComponent');
-  };
-
-  const handleSpecialsPress = () => {
-    navigation.navigate('SetSpecials');
-  };
-
+const BottomTabNavigator = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Bar Home</Text>
-      <TouchableOpacity onPress={handleLinePress}>
-        <Text style={styles.button}>Set Line Time</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleCountPress}>
-        <Text style={styles.button}>Set Line Time</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleSpecialsPress}>
-        <Text style={styles.button}>Set Specials</Text>
-      </TouchableOpacity>
-    </View>
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+
+          if (route.name === 'Line Time') {
+            iconName = 'timer-sand';
+          } else if (route.name === 'Head Count') {
+            iconName = 'counter';
+          } else if (route.name === 'Set Specials') {
+            iconName = 'sale';
+          } else if (route.name === 'Calendar') {
+            iconName = 'calendar';
+          } else if (route.name === 'Account') {
+            iconName = 'account-circle-outline'; // Choose an appropriate icon for the account tab
+          }
+
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#ffdc00',
+        tabBarInactiveTintColor: 'gray',
+        tabBarActiveBackgroundColor: '#001f3f',
+      })}>
+      <Tab.Screen
+        name="Line Time"
+        component={SetLineTime}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Head Count"
+        component={NumberComponent}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen name="Calendar" component={SetCalendar} />
+      <Tab.Screen name="Account" component={Account} />
+      {/* Add the new Account tab */}
+    </Tab.Navigator>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  button: {
-    fontSize: 18,
-    color: 'blue',
-    marginTop: 20,
-  },
-});
-
-export default BarHome;
+export default BottomTabNavigator;

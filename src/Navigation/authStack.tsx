@@ -19,12 +19,72 @@ export default function AuthStack() {
           backgroundColor: 'white',
         },
       }}>
-      <Stack.Screen name="Welcome" component={HomeScreen} />
-      <Stack.Screen name="Bar Login" component={BarLoginScreen} />
-      <Stack.Screen name="Customer Login" component={CustomerLoginScreen} />
-      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <Stack.Screen name="BarRegisterScreen" component={BarRegisterScreen} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <Stack.Screen
+        name="Welcome"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+          headerTintColor: '#001f3f',
+          headerStyle: {
+            backgroundColor: '#f5f5f5',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Bar Login"
+        component={BarLoginScreen}
+        options={{
+          headerTitle: ' ',
+          headerTintColor: '#001f3f',
+          headerStyle: {
+            backgroundColor: '#f5f5f5',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Customer Login"
+        component={CustomerLoginScreen}
+        options={{
+          headerTitle: ' ',
+          headerTintColor: '#001f3f',
+          headerStyle: {
+            backgroundColor: '#f5f5f5',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+        options={{
+          headerTitle: ' ',
+          headerTintColor: '#001f3f',
+          headerStyle: {
+            backgroundColor: '#f5f5f5',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="BarRegisterScreen"
+        component={BarRegisterScreen}
+        options={{
+          headerTitle: ' ',
+          headerTintColor: '#001f3f',
+          headerStyle: {
+            backgroundColor: '#f5f5f5',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPassword}
+        options={{
+          headerTitle: ' ',
+          headerTintColor: '#001f3f',
+          headerStyle: {
+            backgroundColor: '#f5f5f5',
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }

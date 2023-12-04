@@ -1,4 +1,9 @@
 {
   "name": "BBreact",
-  "displayName": "BBreact"
+  "displayName": "Boone Bars",
+
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-4769036634090806~1341320064",
+    "ios_app_id": "ca-app-pub-4769036634090806~6568095582"
+  }
 }

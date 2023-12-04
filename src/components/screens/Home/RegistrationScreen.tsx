@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
-  Button,
   TextInput,
+  TouchableOpacity,
   View,
-  ViewStyle,
+  Text,
+  StyleSheet,
   Alert,
 } from 'react-native';
 import {FIREBASE_AUTH, FIRESTORE} from '../../../../FirebaseConfig';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {createUserWithEmailAndPassword, signOut} from 'firebase/auth';
 import {doc, setDoc} from 'firebase/firestore';
 
 type RegisterScreenProps = {
@@ -20,69 +21,47 @@ type RegisterScreenProps = {
 const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
   const firestore = FIRESTORE;
 
   const register = async () => {
-    const loweredEmail = email.toLowerCase();
     setLoading(true);
     try {
       const {user} = await createUserWithEmailAndPassword(
         auth,
-        loweredEmail,
+        email.toLowerCase(),
         password,
       );
-      console.log(user);
-      // Create new user document in Firestore with user data
       await setDoc(doc(firestore, 'users', user.uid), {
-        Email: loweredEmail,
+        Email: email.toLowerCase(),
         userType: 'customer',
         firstName: firstName,
         lastName: lastName,
         userID: user.uid,
-        Bar: 'customer',
       });
       // Sign out the user after registration
-      await auth.signOut();
-      // Navigate to login screen upon successful registration
-      navigation.navigate('Customer Login');
+      await signOut(auth);
+      Alert.alert('Registration Successful', 'Please log in.');
+      navigation.navigate('Welcome');
     } catch (error) {
-      if (error.code === 'auth/email-already-in-use') {
-        Alert.alert('Error', 'Email is already in use');
-      } else {
-        console.log(error);
-      }
+      Alert.alert('Registration Failed', error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const styles = {
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      padding: 16,
-      backgroundColor: '#f5f5f5',
-    } as ViewStyle,
-    input: {
-      borderWidth: 1,
-      borderColor: 'gray',
-      padding: 8,
-      marginBottom: 10,
-      borderRadius: 5,
-    },
-  };
-
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Register</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
@@ -104,12 +83,48 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
         onChangeText={setLastName}
       />
       {loading ? (
-        <ActivityIndicator />
+        <ActivityIndicator size="large" color="#001f3f" />
       ) : (
-        <Button title="Register" onPress={register} />
+        <TouchableOpacity style={styles.button} onPress={register}>
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+    backgroundColor: '#f5f5f5',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#001f3f',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#001f3f',
+    padding: 12,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  button: {
+    backgroundColor: '#001f3f',
+    padding: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+});
 
 export default RegisterScreen;
