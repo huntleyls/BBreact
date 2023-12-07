@@ -81,12 +81,14 @@ const BarRegisterScreen: React.FC<BarRegisterScreenProps> = ({navigation}) => {
       <TextInput
         style={styles.input}
         placeholder="Email"
+        placeholderTextColor="#000000"
         value={email}
         onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
+        placeholderTextColor="#000000"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -94,18 +96,21 @@ const BarRegisterScreen: React.FC<BarRegisterScreenProps> = ({navigation}) => {
       <TextInput
         style={styles.input}
         placeholder="First Name"
+        placeholderTextColor="#000000"
         value={firstName}
         onChangeText={setFirstName}
       />
       <TextInput
         style={styles.input}
         placeholder="Last Name"
+        placeholderTextColor="#000000"
         value={lastName}
         onChangeText={setLastName}
       />
       <TextInput
         style={styles.input}
         placeholder="Bar"
+        placeholderTextColor="#000000"
         value={bar}
         onChangeText={setBar}
       />

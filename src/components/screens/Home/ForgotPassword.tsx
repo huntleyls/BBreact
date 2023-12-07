@@ -38,6 +38,7 @@ const ForgotPassword: React.FC = () => {
       <TextInput
         style={styles.input}
         placeholder="Enter your email"
+        placeholderTextColor="#000000"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"

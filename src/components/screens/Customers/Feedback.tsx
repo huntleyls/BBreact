@@ -17,7 +17,7 @@ const FeedbackComponent = () => {
     try {
       const feedbackCollectionRef = collection(FIRESTORE, 'Feedback');
       await addDoc(feedbackCollectionRef, {
-        name: userName, // Replace with actual user name if available
+        name: userName,
         feedback: feedback,
         timestamp: serverTimestamp(),
       });

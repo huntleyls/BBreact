@@ -6,7 +6,7 @@ type HomeScreenProps = {
     navigate: (screen: string) => void;
   };
 };
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Image
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#ffdc00', // Background color of the whole screen
+    backgroundColor: '#ffdc00',
   },
   image: {
     width: 300,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    backgroundColor: '#001f3f', // Button color
+    backgroundColor: '#001f3f',
     padding: 16,
     marginBottom: 8,
     alignItems: 'center',
@@ -52,6 +52,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-
 
 export default HomeScreen;

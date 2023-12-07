@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* BBreactTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BBreactTests.m */; };
+		00E356F31AD99517003FC87E /* BooneBarsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BooneBarsTests.m */; };
+		0FF10AB314F02874E85449B2 /* Pods_BooneBars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24314189F7EB9732F49EBCD4 /* Pods_BooneBars.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		7D13F4CCD81EE2DB2D34C4DD /* Pods_BBreact.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A653F16C66EC3B033240D44A /* Pods_BBreact.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		CA16F7360FC286E5ADC22AD0 /* Pods_BBreact_BBreactTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 707E451AAFA9EEAAA689FAAF /* Pods_BBreact_BBreactTests.framework */; };
+		C667B07957EA9D857D0CF1E5 /* Pods_BooneBars_BooneBarsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8718E4F143A33315CFCB0E16 /* Pods_BooneBars_BooneBarsTests.framework */; };
 		CB0DE3C72AF2A70D0016B937 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB0DE3C62AF2A70D0016B937 /* Assets.xcassets */; };
 		CBD348192AD24C28009AB949 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBD348182AD24C27009AB949 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -24,30 +24,30 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = BBreact;
+			remoteInfo = BooneBars;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* BBreactTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BBreactTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* BooneBarsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BooneBarsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* BBreactTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BBreactTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* BBreact.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BBreact.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = BBreact/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = BBreact/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BBreact/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BBreact/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BBreact/main.m; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-BBreact.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BBreact.debug.xcconfig"; path = "Target Support Files/Pods-BBreact/Pods-BBreact.debug.xcconfig"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-BBreact.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BBreact.release.xcconfig"; path = "Target Support Files/Pods-BBreact/Pods-BBreact.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-BBreact-BBreactTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BBreact-BBreactTests.debug.xcconfig"; path = "Target Support Files/Pods-BBreact-BBreactTests/Pods-BBreact-BBreactTests.debug.xcconfig"; sourceTree = "<group>"; };
-		707E451AAFA9EEAAA689FAAF /* Pods_BBreact_BBreactTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BBreact_BBreactTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BBreact/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-BBreact-BBreactTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BBreact-BBreactTests.release.xcconfig"; path = "Target Support Files/Pods-BBreact-BBreactTests/Pods-BBreact-BBreactTests.release.xcconfig"; sourceTree = "<group>"; };
-		A653F16C66EC3B033240D44A /* Pods_BBreact.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BBreact.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356F21AD99517003FC87E /* BooneBarsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BooneBarsTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* BooneBars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BooneBars.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = BooneBars/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = BooneBars/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BooneBars/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = BooneBars/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = BooneBars/main.m; sourceTree = "<group>"; };
+		24314189F7EB9732F49EBCD4 /* Pods_BooneBars.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BooneBars.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B4392A12AC88292D35C810B /* Pods-BooneBars.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BooneBars.debug.xcconfig"; path = "Target Support Files/Pods-BooneBars/Pods-BooneBars.debug.xcconfig"; sourceTree = "<group>"; };
+		5709B34CF0A7D63546082F79 /* Pods-BooneBars.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BooneBars.release.xcconfig"; path = "Target Support Files/Pods-BooneBars/Pods-BooneBars.release.xcconfig"; sourceTree = "<group>"; };
+		5B7EB9410499542E8C5724F5 /* Pods-BooneBars-BooneBarsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BooneBars-BooneBarsTests.debug.xcconfig"; path = "Target Support Files/Pods-BooneBars-BooneBarsTests/Pods-BooneBars-BooneBarsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BooneBars/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8718E4F143A33315CFCB0E16 /* Pods_BooneBars_BooneBarsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BooneBars_BooneBarsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89C6BE57DB24E9ADA2F236DE /* Pods-BooneBars-BooneBarsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BooneBars-BooneBarsTests.release.xcconfig"; path = "Target Support Files/Pods-BooneBars-BooneBarsTests/Pods-BooneBars-BooneBarsTests.release.xcconfig"; sourceTree = "<group>"; };
 		CB0DE3C62AF2A70D0016B937 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CBD348162AD247E4009AB949 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "BBreact/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		CBD348182AD24C27009AB949 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "BBreact/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CBD348162AD247E4009AB949 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "BooneBars/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CBD348182AD24C27009AB949 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "BooneBars/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA16F7360FC286E5ADC22AD0 /* Pods_BBreact_BBreactTests.framework in Frameworks */,
+				C667B07957EA9D857D0CF1E5 /* Pods_BooneBars_BooneBarsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,20 +64,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D13F4CCD81EE2DB2D34C4DD /* Pods_BBreact.framework in Frameworks */,
+				0FF10AB314F02874E85449B2 /* Pods_BooneBars.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* BBreactTests */ = {
+		00E356EF1AD99517003FC87E /* BooneBarsTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* BBreactTests.m */,
+				00E356F21AD99517003FC87E /* BooneBarsTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = BBreactTests;
+			path = BooneBarsTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -88,7 +88,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* BBreact */ = {
+		13B07FAE1A68108700A75B9A /* BooneBars */ = {
 			isa = PBXGroup;
 			children = (
 				CB0DE3C52AF1D97E0016B937 /* Fonts */,
@@ -100,15 +100,15 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				CB0DE3C62AF2A70D0016B937 /* Assets.xcassets */,
 			);
-			name = BBreact;
+			name = BooneBars;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				A653F16C66EC3B033240D44A /* Pods_BBreact.framework */,
-				707E451AAFA9EEAAA689FAAF /* Pods_BBreact_BBreactTests.framework */,
+				24314189F7EB9732F49EBCD4 /* Pods_BooneBars.framework */,
+				8718E4F143A33315CFCB0E16 /* Pods_BooneBars_BooneBarsTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,9 +125,9 @@
 			children = (
 				CBD348162AD247E4009AB949 /* GoogleService-Info.plist */,
 				CBD348182AD24C27009AB949 /* GoogleService-Info.plist */,
-				13B07FAE1A68108700A75B9A /* BBreact */,
+				13B07FAE1A68108700A75B9A /* BooneBars */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* BBreactTests */,
+				00E356EF1AD99517003FC87E /* BooneBarsTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -140,8 +140,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* BBreact.app */,
-				00E356EE1AD99517003FC87E /* BBreactTests.xctest */,
+				13B07F961A680F5B00A75B9A /* BooneBars.app */,
+				00E356EE1AD99517003FC87E /* BooneBarsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -149,10 +149,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-BBreact.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-BBreact.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-BBreact-BBreactTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-BBreact-BBreactTests.release.xcconfig */,
+				3B4392A12AC88292D35C810B /* Pods-BooneBars.debug.xcconfig */,
+				5709B34CF0A7D63546082F79 /* Pods-BooneBars.release.xcconfig */,
+				5B7EB9410499542E8C5724F5 /* Pods-BooneBars-BooneBarsTests.debug.xcconfig */,
+				89C6BE57DB24E9ADA2F236DE /* Pods-BooneBars-BooneBarsTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -167,9 +167,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* BBreactTests */ = {
+		00E356ED1AD99517003FC87E /* BooneBarsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BBreactTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BooneBarsTests" */;
 			buildPhases = (
 				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -183,14 +183,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = BBreactTests;
-			productName = BBreactTests;
-			productReference = 00E356EE1AD99517003FC87E /* BBreactTests.xctest */;
+			name = BooneBarsTests;
+			productName = BooneBarsTests;
+			productReference = 00E356EE1AD99517003FC87E /* BooneBarsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* BBreact */ = {
+		13B07F861A680F5B00A75B9A /* BooneBars */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BBreact" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BooneBars" */;
 			buildPhases = (
 				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -207,9 +207,9 @@
 			);
 			dependencies = (
 			);
-			name = BBreact;
-			productName = BBreact;
-			productReference = 13B07F961A680F5B00A75B9A /* BBreact.app */;
+			name = BooneBars;
+			productName = BooneBars;
+			productReference = 13B07F961A680F5B00A75B9A /* BooneBars.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -230,7 +230,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "BBreact" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "BooneBars" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -243,8 +243,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* BBreact */,
-				00E356ED1AD99517003FC87E /* BBreactTests */,
+				13B07F861A680F5B00A75B9A /* BooneBars */,
+				00E356ED1AD99517003FC87E /* BooneBarsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -293,15 +293,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BBreact/Pods-BBreact-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BooneBars/Pods-BooneBars-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BBreact/Pods-BBreact-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BooneBars/Pods-BooneBars-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BBreact/Pods-BBreact-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BooneBars/Pods-BooneBars-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		367E60C490185CCAC398883F /* [CP-User] [RNFB] Core Configuration */ = {
@@ -345,7 +345,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BBreact-BBreactTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-BooneBars-BooneBarsTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -367,7 +367,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BBreact-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-BooneBars-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -380,15 +380,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BBreact-BBreactTests/Pods-BBreact-BBreactTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BooneBars-BooneBarsTests/Pods-BooneBars-BooneBarsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BBreact-BBreactTests/Pods-BBreact-BBreactTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BooneBars-BooneBarsTests/Pods-BooneBars-BooneBarsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BBreact-BBreactTests/Pods-BBreact-BBreactTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BooneBars-BooneBarsTests/Pods-BooneBars-BooneBarsTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
@@ -397,15 +397,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BBreact/Pods-BBreact-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BooneBars/Pods-BooneBars-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BBreact/Pods-BBreact-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BooneBars/Pods-BooneBars-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BBreact/Pods-BBreact-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BooneBars/Pods-BooneBars-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
@@ -414,15 +414,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BBreact-BBreactTests/Pods-BBreact-BBreactTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BooneBars-BooneBarsTests/Pods-BooneBars-BooneBarsTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BBreact-BBreactTests/Pods-BBreact-BBreactTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BooneBars-BooneBarsTests/Pods-BooneBars-BooneBarsTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BBreact-BBreactTests/Pods-BBreact-BBreactTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BooneBars-BooneBarsTests/Pods-BooneBars-BooneBarsTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -451,7 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* BBreactTests.m in Sources */,
+				00E356F31AD99517003FC87E /* BooneBarsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,7 +469,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* BBreact */;
+			target = 13B07F861A680F5B00A75B9A /* BooneBars */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -477,7 +477,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-BBreact-BBreactTests.debug.xcconfig */;
+			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-BooneBars-BooneBarsTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -485,7 +485,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = BBreactTests/Info.plist;
+				INFOPLIST_FILE = BooneBarsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -499,18 +499,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BBreact.app/BBreact";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BooneBars.app/BooneBars";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-BBreact-BBreactTests.release.xcconfig */;
+			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-BooneBars-BooneBarsTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = BBreactTests/Info.plist;
+				INFOPLIST_FILE = BooneBarsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -524,19 +524,22 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BBreact.app/BBreact";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BooneBars.app/BooneBars";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-BBreact.debug.xcconfig */;
+			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-BooneBars.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = JPM7JSUE4R;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = BBreact/Info.plist;
+				INFOPLIST_FILE = BooneBars/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Boone Bars";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -547,8 +550,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = BBreact;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huntleyls.boonebars;
+				PRODUCT_NAME = BooneBars;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -557,12 +560,15 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-BBreact.release.xcconfig */;
+			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-BooneBars.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = BBreact/Info.plist;
+				DEVELOPMENT_TEAM = JPM7JSUE4R;
+				INFOPLIST_FILE = BooneBars/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Boone Bars";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -573,8 +579,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = BBreact;
+				PRODUCT_BUNDLE_IDENTIFIER = com.huntleyls.boonebars;
+				PRODUCT_NAME = BooneBars;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -657,10 +663,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -738,10 +741,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -751,7 +751,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BBreactTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BooneBarsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -760,7 +760,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BBreact" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BooneBars" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -769,7 +769,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "BBreact" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "BooneBars" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
