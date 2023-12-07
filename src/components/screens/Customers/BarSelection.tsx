@@ -159,7 +159,7 @@ const BarTypeSelection = ({navigation}: BarSelectionProps) => {
             </TouchableOpacity>
             {renderBarDetails(bar)}
           </View>
-          {/* Conditional rendering of SmallBannerAd */}
+
           {index % 2 === 1 && <SmallBannerAd />}
         </React.Fragment>
       ))}
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   button: {
-    backgroundColor: '#001f3f', // Example button color
+    backgroundColor: '#001f3f',
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -217,30 +217,28 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   label: {
-    width: 80, // Adjust width as needed
+    width: 80,
     fontWeight: 'bold',
   },
   link: {
     color: '#0000FF',
-    marginLeft: 10, // Adjust spacing as needed
+    marginLeft: 10,
   },
   content: {
-    marginLeft: 10, // Adjust spacing as needed
+    marginLeft: 10,
   },
   dayRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 20, // Adjust for indentation
+    marginLeft: 20,
   },
   day: {
-    marginRight: 10, // Space between day and hours
+    marginRight: 10,
   },
-  hours: {
-    // Additional styling for hours text if needed
-  },
+  hours: {},
   phone: {
     color: '#0000FF',
-    marginLeft: 20, // Adjust spacing as needed
+    marginLeft: 20,
   },
   header: {
     fontWeight: 'bold',

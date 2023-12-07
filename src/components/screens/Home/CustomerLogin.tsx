@@ -58,6 +58,7 @@ const CustomerLoginScreen: React.FC<CustomerLoginScreenProps> = ({
         style={styles.input}
         value={email}
         placeholder="Email"
+        placeholderTextColor="#000000"
         autoCapitalize="none"
         onChangeText={text => setEmail(text)}
       />
@@ -66,6 +67,7 @@ const CustomerLoginScreen: React.FC<CustomerLoginScreenProps> = ({
         secureTextEntry={true}
         value={password}
         placeholder="Password"
+        placeholderTextColor="#000000"
         autoCapitalize="none"
         onChangeText={text => setPassword(text)}
       />

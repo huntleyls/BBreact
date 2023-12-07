@@ -21,6 +21,7 @@ type RegisterScreenProps = {
 const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,20 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
 
   const register = async () => {
     setLoading(true);
+    if (!password) {
+      Alert.alert('Error', 'Current password is required.');
+      return;
+    }
+
+    if (!confirmPassword) {
+      Alert.alert('Error', 'new password is required.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'passwords do not match.');
+      return;
+    }
     try {
       const {user} = await createUserWithEmailAndPassword(
         auth,
@@ -59,6 +74,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
       <TextInput
         style={styles.input}
         placeholder="Email"
+        placeholderTextColor="#000000"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -66,19 +82,29 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
       <TextInput
         style={styles.input}
         placeholder="Password"
+        placeholderTextColor="#000000"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
       <TextInput
         style={styles.input}
+        placeholder="Confirm New Password"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+      />
+      <TextInput
+        style={styles.input}
         placeholder="First Name"
+        placeholderTextColor="#000000"
         value={firstName}
         onChangeText={setFirstName}
       />
       <TextInput
         style={styles.input}
         placeholder="Last Name"
+        placeholderTextColor="#000000"
         value={lastName}
         onChangeText={setLastName}
       />

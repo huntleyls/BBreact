@@ -9,8 +9,8 @@ import {
 } from 'firebase/auth';
 
 const ChangePasswordScreen = () => {
-  const {userEmail} = useAuth(); // Destructure userEmail from useAuth
-  const auth = getAuth(); // Get the auth instance
+  const {userEmail} = useAuth();
+  const auth = getAuth();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -94,7 +94,7 @@ const ChangePasswordScreen = () => {
         <Button
           title="Change Password"
           onPress={handleChangePassword}
-          color="white" // This may not change the text color on all platforms
+          color="white"
         />
       </View>
     </View>
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 20,
   },
-  // ... other styles you provided
   input: {
     width: '100%',
     padding: 10,
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 5,
   },
-  // You might need to adjust the button style to ensure it works well with the Button component
+
   button: {
     backgroundColor: '#001f3f',
     padding: 12,

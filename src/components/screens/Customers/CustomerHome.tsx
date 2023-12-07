@@ -2,7 +2,6 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-// Import the customer screens
 import CalendarScreen from './Calendar';
 import LineTimes from './getLineTime';
 import BarTypeSelection from './BarSelection';

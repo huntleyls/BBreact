@@ -51,6 +51,7 @@ const BarLoginScreen: React.FC<BarLoginScreenProps> = ({navigation}) => {
         style={styles.input}
         value={email}
         placeholder="Email"
+        placeholderTextColor="#000000"
         autoCapitalize="none"
         onChangeText={setEmail}
       />
@@ -59,6 +60,7 @@ const BarLoginScreen: React.FC<BarLoginScreenProps> = ({navigation}) => {
         secureTextEntry={true}
         value={password}
         placeholder="Password"
+        placeholderTextColor="#000000"
         autoCapitalize="none"
         onChangeText={setPassword}
       />

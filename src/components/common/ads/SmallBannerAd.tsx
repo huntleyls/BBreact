@@ -8,7 +8,7 @@ const SmallBannerAd: React.FC = () => {
   // Replace with your own ad unit ID for production
   const adUnitId = __DEV__
     ? TestIds.BANNER
-    : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
+    : 'ca-app-pub-4769036634090806/2910291294';
 
   return (
     <View style={styles.container}>
