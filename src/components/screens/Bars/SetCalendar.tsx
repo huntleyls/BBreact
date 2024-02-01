@@ -7,14 +7,24 @@ import {
   TextInput,
   FlatList,
   Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {useAuth} from '../../common/hooks/useAuth';
 import {FIRESTORE as db} from '../../../../FirebaseConfig';
 import {FIRESTORE} from '../../../../FirebaseConfig';
-import {getDocs, collection, addDoc, Timestamp} from 'firebase/firestore';
+import {
+  getDocs,
+  collection,
+  addDoc,
+  doc,
+  Timestamp,
+  deleteDoc,
+} from 'firebase/firestore';
 import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {isAfter, startOfToday} from 'date-fns';
 
 interface Event {
   eventId: string;
@@ -124,16 +134,13 @@ const SetCalendar: React.FC = () => {
         .slice(0, 5)}`,
     );
   };
-  const deleteEvent = async eventId => {
+
+  const deleteEvent = async (eventId: string) => {
     try {
-      await db
-        .collection('Calendar')
-        .doc(barType)
-        .collection('Events')
-        .doc(eventId)
-        .delete();
+      const eventRef = doc(db, 'Calendar', barType, 'Events', eventId);
+      await deleteDoc(eventRef);
       console.log('Event deleted!');
-      fetchEvents(); // Refresh the events list after deleting
+      fetchEvents(); // Refresh the events list after deletion
     } catch (error) {
       console.error('Error deleting event: ', error);
     }
@@ -146,70 +153,83 @@ const SetCalendar: React.FC = () => {
     ]);
   };
 
+  const today = startOfToday(); // Get the start of today's date
+  const futureEvents = events.filter(item =>
+    isAfter(item.date.toDate(), today),
+  );
+
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.formContainer}>
-        <TextInput
-          placeholder="Event Name"
-          value={eventName}
-          onChangeText={setEventName}
-          style={styles.input}
-        />
-
-        <View style={styles.centeredContainer}>
-          <DateTimePicker
-            value={selectedDateTime}
-            mode="date"
-            display="default"
-            onChange={onDateChange}
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <View style={styles.formContainer}>
+          <TextInput
+            placeholder="Event Name"
+            value={eventName}
+            onChangeText={setEventName}
+            style={styles.input}
+            placeholderTextColor="#000000"
           />
-        </View>
-        <View style={styles.centeredContainer}>
-          <DateTimePicker
-            value={selectedDateTime}
-            mode="time"
-            display="default"
-            onChange={onTimeChange}
-          />
-        </View>
 
-        {/* Display Selected Date and Time */}
-        <Text style={styles.selectedDateTime}>
-          Selected: {displayDate} {displayTime}
-        </Text>
-
-        <TextInput
-          placeholder="Description"
-          value={eventDescription}
-          onChangeText={setEventDescription}
-          style={styles.input}
-        />
-        <Button title="Post Event" onPress={postEvent} />
-      </View>
-
-      <FlatList
-        data={events}
-        keyExtractor={item => item.eventId}
-        renderItem={({item}) => (
-          <View style={styles.eventContainer}>
-            <View style={styles.eventDetails}>
-              <Text style={styles.eventName}>{item.name}</Text>
-              <Text>Date: {item.date.toDate().toLocaleDateString()}</Text>
-              <Text>Time: {item.date.toDate().toLocaleTimeString()}</Text>
-              <Text>Description: {item.description}</Text>
-              <Text>Attendance: {item.count}</Text>
-            </View>
-            <Icon
-              name="delete"
-              size={24}
-              color="#FF0000"
-              onPress={() => confirmDelete(item.eventId)}
-              style={styles.deleteIcon}
+          <View style={styles.centeredContainer}>
+            <DateTimePicker
+              value={selectedDateTime}
+              mode="date"
+              display="default"
+              onChange={onDateChange}
             />
           </View>
-        )}
-      />
-    </View>
+          <View style={styles.centeredContainer}>
+            <DateTimePicker
+              value={selectedDateTime}
+              mode="time"
+              display="default"
+              onChange={onTimeChange}
+            />
+          </View>
+
+          {/* Display Selected Date and Time */}
+          <Text style={styles.selectedDateTime}>
+            Selected: {displayDate} {displayTime}
+          </Text>
+
+          <TextInput
+            placeholder="Description"
+            value={eventDescription}
+            onChangeText={setEventDescription}
+            style={styles.input}
+            placeholderTextColor="#000000"
+          />
+          <Button title="Post Event" onPress={postEvent} />
+        </View>
+
+        <FlatList
+          data={futureEvents}
+          keyExtractor={item => item.eventId}
+          renderItem={({item}) => (
+            <View style={styles.eventContainer}>
+              <View style={styles.eventDetails}>
+                <Text style={styles.eventName}>{item.name}</Text>
+                <Text>Date: {item.date.toDate().toLocaleDateString()}</Text>
+                <Text>Time: {item.date.toDate().toLocaleTimeString()}</Text>
+                <Text>Description: {item.description}</Text>
+                <Text>Attendance: {item.count}</Text>
+              </View>
+              <Icon
+                name="delete"
+                size={24}
+                color="#FF0000"
+                onPress={() => confirmDelete(item.eventId)}
+                style={styles.deleteIcon}
+              />
+            </View>
+          )}
+        />
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

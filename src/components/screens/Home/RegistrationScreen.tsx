@@ -7,6 +7,8 @@ import {
   Text,
   StyleSheet,
   Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {FIREBASE_AUTH, FIRESTORE} from '../../../../FirebaseConfig';
 import {createUserWithEmailAndPassword, signOut} from 'firebase/auth';
@@ -68,54 +70,61 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
     }
   };
 
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Register</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor="#000000"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor="#000000"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm New Password"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="First Name"
-        placeholderTextColor="#000000"
-        value={firstName}
-        onChangeText={setFirstName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Last Name"
-        placeholderTextColor="#000000"
-        value={lastName}
-        onChangeText={setLastName}
-      />
-      {loading ? (
-        <ActivityIndicator size="large" color="#001f3f" />
-      ) : (
-        <TouchableOpacity style={styles.button} onPress={register}>
-          <Text style={styles.buttonText}>Register</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Register</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#000000"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#000000"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm New Password"
+          secureTextEntry
+          value={confirmPassword}
+          placeholderTextColor="#000000"
+          onChangeText={setConfirmPassword}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="First Name"
+          placeholderTextColor="#000000"
+          value={firstName}
+          onChangeText={setFirstName}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Last Name"
+          placeholderTextColor="#000000"
+          value={lastName}
+          onChangeText={setLastName}
+        />
+        {loading ? (
+          <ActivityIndicator size="large" color="#001f3f" />
+        ) : (
+          <TouchableOpacity style={styles.button} onPress={register}>
+            <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

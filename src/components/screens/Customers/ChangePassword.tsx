@@ -1,6 +1,16 @@
 import React, {useState} from 'react';
-import {View, TextInput, Button, Alert, StyleSheet, Text} from 'react-native';
+import {
+  View,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Button,
+  Alert,
+  StyleSheet,
+  Text,
+} from 'react-native';
 import {useAuth} from '../../common/hooks/useAuth';
+import {useNavigation} from '@react-navigation/native';
 import {
   getAuth,
   reauthenticateWithCredential,
@@ -11,6 +21,7 @@ import {
 const ChangePasswordScreen = () => {
   const {userEmail} = useAuth();
   const auth = getAuth();
+  const navigation = useNavigation();
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -63,41 +74,49 @@ const ChangePasswordScreen = () => {
       Alert.alert('Error', error.message);
     }
   };
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Current Password"
-        secureTextEntry
-        value={currentPassword}
-        onChangeText={setCurrentPassword}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="New Password"
-        secureTextEntry
-        value={newPassword}
-        onChangeText={setNewPassword}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm New Password"
-        secureTextEntry
-        value={confirmNewPassword}
-        onChangeText={setConfirmNewPassword}
-      />
-
-      <View style={styles.button}>
-        <Button
-          title="Change Password"
-          onPress={handleChangePassword}
-          color="white"
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Current Password"
+          secureTextEntry
+          value={currentPassword}
+          onChangeText={setCurrentPassword}
+          placeholderTextColor="#000000"
         />
+
+        <TextInput
+          style={styles.input}
+          placeholder="New Password"
+          secureTextEntry
+          value={newPassword}
+          onChangeText={setNewPassword}
+          placeholderTextColor="#000000"
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm New Password"
+          secureTextEntry
+          value={confirmNewPassword}
+          onChangeText={setConfirmNewPassword}
+          placeholderTextColor="#000000"
+        />
+
+        <View style={styles.button}>
+          <Button
+            title="Change Password"
+            onPress={handleChangePassword}
+            color="white"
+          />
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

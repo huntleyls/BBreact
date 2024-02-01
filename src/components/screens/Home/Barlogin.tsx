@@ -7,6 +7,8 @@ import {
   View,
   Alert,
   StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {FIREBASE_AUTH} from '../../../../FirebaseConfig';
 import {signInWithEmailAndPassword} from 'firebase/auth';
@@ -44,47 +46,53 @@ const BarLoginScreen: React.FC<BarLoginScreenProps> = ({navigation}) => {
     }
   };
 
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bar Login</Text>
-      <TextInput
-        style={styles.input}
-        value={email}
-        placeholder="Email"
-        placeholderTextColor="#000000"
-        autoCapitalize="none"
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        secureTextEntry={true}
-        value={password}
-        placeholder="Password"
-        placeholderTextColor="#000000"
-        autoCapitalize="none"
-        onChangeText={setPassword}
-      />
-      {errorMessage ? (
-        <Text style={styles.errorText}>{errorMessage}</Text>
-      ) : null}
-      {loading ? (
-        <ActivityIndicator size="large" color="#001f3f" />
-      ) : (
-        <TouchableOpacity style={styles.button} onPress={signIn}>
-          <Text style={styles.buttonText}>Login</Text>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Bar Login</Text>
+        <TextInput
+          style={styles.input}
+          value={email}
+          placeholder="Email"
+          placeholderTextColor="#000000"
+          autoCapitalize="none"
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          secureTextEntry={true}
+          value={password}
+          placeholder="Password"
+          placeholderTextColor="#000000"
+          autoCapitalize="none"
+          onChangeText={setPassword}
+        />
+        {errorMessage ? (
+          <Text style={styles.errorText}>{errorMessage}</Text>
+        ) : null}
+        {loading ? (
+          <ActivityIndicator size="large" color="#001f3f" />
+        ) : (
+          <TouchableOpacity style={styles.button} onPress={signIn}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={() => navigation.navigate('RegisterScreen')}>
+          <Text style={styles.linkButtonText}>Create Account</Text>
         </TouchableOpacity>
-      )}
-      <TouchableOpacity
-        style={styles.linkButton}
-        onPress={() => navigation.navigate('RegisterScreen')}>
-        <Text style={styles.linkButtonText}>Create Account</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.linkButton}
-        onPress={() => navigation.navigate('ForgotPassword')}>
-        <Text style={styles.linkButtonText}>Forgot Password?</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={() => navigation.navigate('ForgotPassword')}>
+          <Text style={styles.linkButtonText}>Forgot Password?</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

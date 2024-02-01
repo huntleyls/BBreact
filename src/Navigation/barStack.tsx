@@ -3,6 +3,7 @@ import BottomTabNavigator from '../components/screens/Bars/BarHome';
 import ChangePassword from '../components/screens/Bars/ChangePassword';
 import SetSpecials from '../components/screens/Bars/setSpecials';
 import FeedbackComponent from '../components/screens/Bars/Feedback';
+import DeleteAccountScreen from '../components/screens/Bars/DeleteAccount';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,11 @@ export default function BarStack() {
         name="ChangePassword"
         component={ChangePassword}
         options={{title: 'Change Password'}}
+      />
+      <Stack.Screen
+        name="Delete"
+        component={DeleteAccountScreen}
+        options={{title: 'Delete'}}
       />
     </Stack.Navigator>
   );
