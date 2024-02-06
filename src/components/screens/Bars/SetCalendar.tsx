@@ -60,6 +60,8 @@ const SetCalendar: React.FC = () => {
         return 'Tapp Room';
       case 'HS':
         return 'Howard Station';
+      case 'FE':
+        return 'Fizz ED';
       default:
         return ''; // Default case if barType does not match
     }
@@ -154,8 +156,8 @@ const SetCalendar: React.FC = () => {
   };
 
   const today = startOfToday(); // Get the start of today's date
-  const futureEvents = events.filter(item =>
-    isAfter(item.date.toDate(), today),
+  const futureEvents = events.filter(
+    item => item.date && isAfter(item.date.toDate(), today),
   );
 
   const dismissKeyboard = () => {
@@ -163,8 +165,8 @@ const SetCalendar: React.FC = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={styles.formContainer}>
           <TextInput
             placeholder="Event Name"
@@ -205,16 +207,22 @@ const SetCalendar: React.FC = () => {
           />
           <Button title="Post Event" onPress={postEvent} />
         </View>
-
-        <FlatList
-          data={futureEvents}
-          keyExtractor={item => item.eventId}
-          renderItem={({item}) => (
+      </TouchableWithoutFeedback>
+      <FlatList
+        data={futureEvents}
+        keyExtractor={item => item.eventId}
+        renderItem={({item}) => {
+          const eventDate = item.date ? item.date.toDate() : null;
+          return (
             <View style={styles.eventContainer}>
               <View style={styles.eventDetails}>
                 <Text style={styles.eventName}>{item.name}</Text>
-                <Text>Date: {item.date.toDate().toLocaleDateString()}</Text>
-                <Text>Time: {item.date.toDate().toLocaleTimeString()}</Text>
+                <Text>
+                  Date: {eventDate ? eventDate.toLocaleDateString() : ''}
+                </Text>
+                <Text>
+                  Time: {eventDate ? eventDate.toLocaleTimeString() : ''}
+                </Text>
                 <Text>Description: {item.description}</Text>
                 <Text>Attendance: {item.count}</Text>
               </View>
@@ -226,10 +234,10 @@ const SetCalendar: React.FC = () => {
                 style={styles.deleteIcon}
               />
             </View>
-          )}
-        />
-      </View>
-    </TouchableWithoutFeedback>
+          );
+        }}
+      />
+    </View>
   );
 };
 

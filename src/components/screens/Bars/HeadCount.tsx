@@ -66,6 +66,8 @@ const NumberComponent = () => {
         return 'Tapp Room';
       case 'HS':
         return 'Howard Station';
+      case 'FE':
+        return 'Fizz ED';
       default:
         return ''; // Default case if barType does not match
     }

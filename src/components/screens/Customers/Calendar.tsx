@@ -18,6 +18,8 @@ import {
 } from 'firebase/firestore';
 import {FIRESTORE} from '../../../../FirebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {format} from 'date-fns-tz';
+import SmallBannerAd3 from '../../common/ads/SmallBannerAd3';
 
 interface Event {
   eventId: string;
@@ -38,7 +40,7 @@ const CalendarScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedDate, setSelectedDate] = useState('');
   const [sections, setSections] = useState<Section[]>([]);
-  const barTypes = ['BS', 'HS', 'TAPP', 'RSAH'];
+  const barTypes = ['BS', 'HS', 'TAPP', 'RSAH', 'FE'];
   const [userResponses, setUserResponses] = useState({});
 
   const fetchDatesFromFirestore = async () => {
@@ -56,11 +58,19 @@ const CalendarScreen = () => {
 
         querySnapshot.forEach(doc => {
           const data = doc.data();
-          const date = data.date.toDate().toISOString().split('T')[0];
+          const originalDate = data.date.toDate();
+
+          // Adjust the date by subtracting one day
+          const adjustedDate = new Date(originalDate);
+          adjustedDate.setDate(originalDate.getDate() - 1);
+
+          // Format the adjusted date
+          const date = adjustedDate.toISOString().split('T')[0];
+
           newMarkedDates[date] = {marked: true, dotColor: 'blue'};
         });
       }
-
+      console.log('newMarkedDates:', newMarkedDates);
       setMarkedDates(newMarkedDates);
     } catch (error) {
       console.error('Error fetching dates:', error);
@@ -83,19 +93,32 @@ const CalendarScreen = () => {
       const eventsByBar = {};
 
       for (const barType of barTypes) {
-        const dayStart = new Date(dateString + 'T00:00:00Z');
-        const dayEnd = new Date(dateString + 'T23:59:59Z');
+        const originalDate = new Date(dateString);
+
+        // Adjust the date by subtracting one day
+        const adjustedDate = new Date(originalDate);
+        adjustedDate.setDate(originalDate.getDate() + 1);
+
+        const dayStart = new Date(
+          adjustedDate.toISOString().split('T')[0] + 'T00:00:00Z',
+        );
+        const dayEnd = new Date(
+          adjustedDate.toISOString().split('T')[0] + 'T23:59:59Z',
+        );
+
         const eventsCollectionRef = collection(
           FIRESTORE,
           'Calendar',
           barType,
           'Events',
         );
+
         const q = query(
           eventsCollectionRef,
           where('date', '>=', Timestamp.fromDate(dayStart)),
           where('date', '<=', Timestamp.fromDate(dayEnd)),
         );
+
         const querySnapshot = await getDocs(q);
 
         querySnapshot.forEach(doc => {
@@ -109,8 +132,10 @@ const CalendarScreen = () => {
             barName: data.barName,
             attending: userResponses[doc.id] ?? false,
           };
+
           // Use barName as the key for grouping
           const barNameKey = data.barName;
+
           if (!eventsByBar[barNameKey]) {
             eventsByBar[barNameKey] = [event];
           } else {
@@ -143,6 +168,8 @@ const CalendarScreen = () => {
       bar = 'TAPP';
     } else if (sectionTitle === 'Howard Station') {
       bar = 'HS';
+    } else if (sectionTitle === 'Fizz ED') {
+      bar = 'FE';
     } else {
       console.error('Unknown section title');
       return;
@@ -260,6 +287,10 @@ const CalendarScreen = () => {
           }}
           renderSectionHeader={({section: {title}}) => (
             <Text style={styles.header}>{title}</Text>
+          )}
+          renderSectionFooter={() => (
+            // Always render the SmallBannerAd2 after each section
+            <SmallBannerAd3 />
           )}
         />
       )}
