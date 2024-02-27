@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useLayoutEffect} from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   Alert,
   Keyboard,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 import {useAuth} from '../../common/hooks/useAuth';
 import {FIRESTORE as db} from '../../../../FirebaseConfig';
@@ -25,6 +26,7 @@ import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {isAfter, startOfToday} from 'date-fns';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 interface Event {
   eventId: string;
@@ -33,8 +35,16 @@ interface Event {
   description: string;
   count: number;
 }
+type RootStackParamList = {
+  ViewCalendarScreen: undefined;
+  SetSpecials: undefined;
+  // ... other route names
+};
+type SetCalendarProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'ViewCalendarScreen'>;
+};
 
-const SetCalendar: React.FC = () => {
+const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
   const {barType} = useAuth();
   const [events, setEvents] = useState<Event[]>([]);
   const [eventName, setEventName] = useState('');
@@ -94,6 +104,17 @@ const SetCalendar: React.FC = () => {
       }
     }
   };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ViewCalendarScreen')}
+          style={styles.button}>
+          <Text style={styles.buttonText}>View Calendar</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   const fetchEvents = useCallback(async () => {
     if (barType) {
@@ -223,7 +244,8 @@ const SetCalendar: React.FC = () => {
                 <Text>
                   Time: {eventDate ? eventDate.toLocaleTimeString() : ''}
                 </Text>
-                <Text>Description: {item.description}</Text>
+                <Text>Description: </Text>
+                <Text>{item.description}</Text>
                 <Text>Attendance: {item.count}</Text>
               </View>
               <Icon
@@ -294,6 +316,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#111827',
     alignSelf: 'center',
+  },
+  button: {
+    // You can adjust the padding to change the size
+    paddingVertical: 5, // Smaller vertical padding
+    paddingHorizontal: 10, // Smaller horizontal padding to make the button smaller
+    marginRight: 10, // Optional: to ensure it doesn't touch the screen edge
+    backgroundColor: 'green', // Adjust as needed
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 12, // Smaller font size
+    color: 'white', // Adjust the color as needed
   },
 });
 

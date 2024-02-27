@@ -38,7 +38,7 @@ interface Section {
   data: Event[];
 }
 
-const CalendarScreen = () => {
+const ViewCalendarScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedDate, setSelectedDate] = useState('');
   const [sections, setSections] = useState<Section[]>([]);
@@ -273,13 +273,6 @@ const CalendarScreen = () => {
                 </Text>
                 <Text style={styles.description}>{item.description}</Text>
                 <Text style={styles.description}>Attending: {item.count}</Text>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => toggleAttendance(section.title, item.eventId)}>
-                  <Text style={styles.buttonText}>
-                    {isAttending ? 'Not Attending' : 'Attend'}
-                  </Text>
-                </TouchableOpacity>
               </View>
             );
           }}
@@ -336,4 +329,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CalendarScreen;
+export default ViewCalendarScreen;

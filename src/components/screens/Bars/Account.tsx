@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     color: '#001f3f',
     textAlign: 'left',
   },
-  // ... other styles from your Boone Bars app
 });
 
 export default AccountScreen;
