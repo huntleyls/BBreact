@@ -1,5 +1,15 @@
 import React, {useState} from 'react';
-import {View, TextInput, Button, Alert, StyleSheet, Text} from 'react-native';
+import {
+  View,
+  TextInput,
+  Button,
+  Alert,
+  StyleSheet,
+  Text,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {useAuth} from '../../common/hooks/useAuth';
 import {
   getAuth,
@@ -11,11 +21,10 @@ import {
 const ChangePasswordScreen = () => {
   const {userEmail} = useAuth(); // Destructure userEmail from useAuth
   const auth = getAuth(); // Get the auth instance
-
+  const navigation = useNavigation(); // Get the navigation instance
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-
   const handleChangePassword = async () => {
     if (!userEmail) {
       Alert.alert('Error', 'User email is not available.');
@@ -57,47 +66,56 @@ const ChangePasswordScreen = () => {
       await reauthenticateWithCredential(user, credential);
       await updatePassword(user, newPassword);
       Alert.alert('Success', 'Password changed successfully', [
-        {text: 'OK', onPress: () => navigation.goBack()}, // Redirect after success
+        {text: 'OK', onPress: () => navigation.goBack()}, // Navigates back to the previous screen
       ]);
     } catch (error) {
       Alert.alert('Error', error.message);
     }
   };
 
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Current Password"
-        secureTextEntry
-        value={currentPassword}
-        onChangeText={setCurrentPassword}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="New Password"
-        secureTextEntry
-        value={newPassword}
-        onChangeText={setNewPassword}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm New Password"
-        secureTextEntry
-        value={confirmNewPassword}
-        onChangeText={setConfirmNewPassword}
-      />
-
-      <View style={styles.button}>
-        <Button
-          title="Change Password"
-          onPress={handleChangePassword}
-          color="white" // This may not change the text color on all platforms
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Current Password"
+          secureTextEntry
+          value={currentPassword}
+          onChangeText={setCurrentPassword}
+          placeholderTextColor="#000000"
         />
+
+        <TextInput
+          style={styles.input}
+          placeholder="New Password"
+          secureTextEntry
+          value={newPassword}
+          onChangeText={setNewPassword}
+          placeholderTextColor="#000000"
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm New Password"
+          secureTextEntry
+          value={confirmNewPassword}
+          onChangeText={setConfirmNewPassword}
+          placeholderTextColor="#000000"
+        />
+
+        <View style={styles.button}>
+          <Button
+            title="Change Password"
+            onPress={handleChangePassword}
+            color="white" // This may not change the text color on all platforms
+          />
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

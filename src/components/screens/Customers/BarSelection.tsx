@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import SmallBannerAd from '../../common/ads/SmallBannerAd';
+import openMap from 'react-native-open-maps';
 
 export type GetSpecialsRouteParams = {
   bartype: string;
@@ -30,22 +31,54 @@ export type BarInfo = {
   phone: string;
   name: string;
   hours: BarHours;
+  address: string;
 };
 
 const barsData: BarInfo[] = [
   {
-    bartype: 'RSAH',
-    name: 'Rivers Street Ale House',
-    phone: '(828) 264-8100',
+    bartype: 'BS',
+    name: 'Boone Saloon',
+    phone: '(828) 264-1811',
+    hours: {
+      Sunday: '12 PM - 2 AM',
+      Monday: '12 PM - 2 AM',
+      Tuesday: '12 PM - 2 AM',
+      Wednesday: '12 PM - 2 AM',
+      Thursday: '12 PM - 2 AM',
+      Friday: '12 PM - 2 AM',
+      Saturday: '12 PM - 2 AM',
+    },
+    address: '489 W King St, Boone, NC 28607',
+  },
+  {
+    bartype: 'LILY',
+    name: "Lily's snack bar",
+    phone: '(828) 386-6411',
+    hours: {
+      Sunday: '12 PM - 2 AM',
+      Monday: '12 PM - 2 AM',
+      Tuesday: '12 PM - 2 AM',
+      Wednesday: '12 PM - 2 AM',
+      Thursday: '12 PM - 2 AM',
+      Friday: '12 PM - 2 AM',
+      Saturday: '12 PM - 2 AM',
+    },
+    address: '455 Blowing Rock Rd, Boone, NC 28607',
+  },
+  {
+    bartype: 'FE',
+    name: 'Fizz ED',
+    phone: '(828) 832-8102',
     hours: {
       Sunday: '11 AM - 12 AM',
-      Monday: '11 AM - 2 AM',
-      Tuesday: '11 AM - 2 AM',
-      Wednesday: '11 AM - 2 AM',
-      Thursday: '11 AM - 2 AM',
-      Friday: '11 AM - 2 AM',
-      Saturday: '11 AM - 2 AM',
+      Monday: '11 AM - 12 AM',
+      Tuesday: '11 AM - 12 AM',
+      Wednesday: '11 AM - 12 AM',
+      Thursday: '11 AM - 12 AM',
+      Friday: '11 AM - 12 AM',
+      Saturday: '11 AM - 12 AM',
     },
+    address: '260 Howard St, Boone, NC 28607',
   },
   {
     bartype: 'HS',
@@ -60,8 +93,25 @@ const barsData: BarInfo[] = [
       Friday: '5 PM - 11 PM',
       Saturday: '12 PM - 11 PM',
     },
+    address: '268 Howard St, Boone, NC 28607',
   },
   {
+    bartype: 'RSAH',
+    name: 'Rivers Street Ale House',
+    phone: '(828) 264-8100',
+    hours: {
+      Sunday: '11 AM - 12 AM',
+      Monday: '11 AM - 2 AM',
+      Tuesday: '11 AM - 2 AM',
+      Wednesday: '11 AM - 2 AM',
+      Thursday: '11 AM - 2 AM',
+      Friday: '11 AM - 2 AM',
+      Saturday: '11 AM - 2 AM',
+    },
+    address: '957 Rivers St, Boone, NC 28607',
+  },
+
+  /*{
     bartype: 'TAPP',
     name: 'The Tapp Room',
     phone: '123-456-7890',
@@ -74,22 +124,8 @@ const barsData: BarInfo[] = [
       Friday: '11:30 AM - 2 AM',
       Saturday: '11:30 AM - 2 AM',
     },
-  },
-  {
-    bartype: 'BS',
-    name: 'Boone Saloon',
-    phone: '(828) 264-181',
-    hours: {
-      Sunday: '12 PM - 2 AM',
-      Monday: '12 PM - 2 AM',
-      Tuesday: '12 PM - 2 AM',
-      Wednesday: '12 PM - 2 AM',
-      Thursday: '12 PM - 2 AM',
-      Friday: '12 PM - 2 AM',
-      Saturday: '12 PM - 2 AM',
-    },
-  },
-  // ... other bars
+    address: '421 Blowing Rock Rd, Boone, NC 28607',
+  },*/
 ];
 
 const BarTypeSelection = ({navigation}: BarSelectionProps) => {
@@ -111,6 +147,10 @@ const BarTypeSelection = ({navigation}: BarSelectionProps) => {
       .catch(err => Alert.alert('An error occurred', err));
   };
 
+  const openMapToBar = (address: string) => {
+    openMap({query: address});
+  };
+
   const toggleDetails = (bartype: string) => {
     if (expandedBarType === bartype) {
       setExpandedBarType(null);
@@ -123,6 +163,13 @@ const BarTypeSelection = ({navigation}: BarSelectionProps) => {
     if (expandedBarType === bar.bartype) {
       return (
         <View style={{margin: 10}}>
+          <Text style={styles.header}>Address:</Text>
+          <TouchableOpacity onPress={() => openMapToBar(bar.address)}>
+            <Text style={styles.phone}>{bar.address.split(',')[0].trim()}</Text>
+            <Text style={styles.phone}>
+              {bar.address.split(',').slice(1).join(', ').trim()}
+            </Text>
+          </TouchableOpacity>
           <Text style={styles.header}>Phone:</Text>
           <TouchableOpacity onPress={() => makeCall(bar.phone)}>
             <Text style={styles.phone}>{bar.phone}</Text>
@@ -151,7 +198,7 @@ const BarTypeSelection = ({navigation}: BarSelectionProps) => {
               onPress={() =>
                 navigation.navigate('GetSpecials', {bartype: bar.bartype})
               }>
-              <Text style={styles.headerText}>Go to Specials</Text>
+              <Text style={styles.headerText}>Specials</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => toggleDetails(bar.bartype)}>

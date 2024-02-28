@@ -139,12 +139,14 @@ const SetSpecials: React.FC = () => {
       <View style={styles.formContainer}>
         <TextInput
           placeholder="Item Name"
+          placeholderTextColor={'#000'}
           value={name}
           onChangeText={setName}
           style={styles.input}
         />
         <TextInput
           placeholder="Price"
+          placeholderTextColor={'#000'}
           value={price}
           onChangeText={setPrice}
           keyboardType="numeric"
@@ -152,6 +154,7 @@ const SetSpecials: React.FC = () => {
         />
         <TextInput
           placeholder="Description"
+          placeholderTextColor={'#000'}
           value={description}
           onChangeText={setDescription}
           style={styles.input}

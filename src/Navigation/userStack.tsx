@@ -4,6 +4,7 @@ import GetSpecials from '../components/screens/Customers/getSpecials'; // Adjust
 import {GetSpecialsRouteParams} from '../components/screens/Customers/getSpecials';
 import ChangePassword from '../components/screens/Customers/ChangePassword';
 import FeedbackComponent from '../components/screens/Customers/Feedback';
+import DeleteAccountScreen from '../components/screens/Customers/DeleteAccount';
 type UserStackParamList = {
   CustomerHome: undefined; // No parameters expected for CustomerHome
   GetSpecials: GetSpecialsRouteParams; // Use the type defined earlier
@@ -43,6 +44,11 @@ export default function UserStack() {
         name="Feedback"
         component={FeedbackComponent}
         options={{title: 'Feedback'}}
+      />
+      <Stack.Screen
+        name="Delete"
+        component={DeleteAccountScreen}
+        options={{title: 'Delete'}}
       />
       {/* ... other screens ... */}
     </Stack.Navigator>

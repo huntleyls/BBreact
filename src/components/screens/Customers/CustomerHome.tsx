@@ -33,9 +33,9 @@ const CustomerTabNavigator = () => {
         tabBarInactiveTintColor: 'gray',
         tabBarActiveBackgroundColor: '#001f3f',
       })}>
+      <CustomerTab.Screen name="Bars" component={BarTypeSelection} />
       <CustomerTab.Screen name="Line Times" component={LineTimes} />
       <CustomerTab.Screen name="Calendar" component={CalendarScreen} />
-      <CustomerTab.Screen name="Bars" component={BarTypeSelection} />
       <CustomerTab.Screen name="Account" component={CustomerAccountScreen} />
     </CustomerTab.Navigator>
   );

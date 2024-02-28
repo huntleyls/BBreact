@@ -25,6 +25,10 @@ const CustomerAccountScreen = ({navigation}) => {
     navigation.navigate('Feedback'); // Use the correct screen name as defined in your navigator
   };
 
+  const navigateToDeleteAccount = () => {
+    navigation.navigate('Delete'); // Use the correct screen name as defined in your navigator
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Hi {userName}</Text>
@@ -36,6 +40,11 @@ const CustomerAccountScreen = ({navigation}) => {
           style={styles.menuItem}
           onPress={navigateToChangePassword}>
           <Text style={styles.menuItemText}>Change Password</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={navigateToDeleteAccount}>
+          <Text style={styles.menuItemText}>Delete Account</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem} onPress={signOutUser}>
           <Text style={styles.menuItemText}>Sign Out</Text>

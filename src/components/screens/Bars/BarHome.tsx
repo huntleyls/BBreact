@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // Import your tab screens
 import SetLineTime from './setLineTime';
 import NumberComponent from './HeadCount';
-import SetSpecials from './setSpecials';
 import SetCalendar from './SetCalendar';
 import Account from './Account'; // Import the new Account component
 

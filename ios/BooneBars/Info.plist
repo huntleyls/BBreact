@@ -17,11 +17,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.0.1</string>
+	<string>0.0.3</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>NSHumanReadableCopyright</key>
+	<string></string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>5</string>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-4769036634090806~6568095582</string>
 	<key>LSRequiresIPhoneOS</key>

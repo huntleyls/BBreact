@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useLayoutEffect} from 'react';
 import {
   View,
   Text,
@@ -7,14 +7,26 @@ import {
   TextInput,
   FlatList,
   Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 import {useAuth} from '../../common/hooks/useAuth';
 import {FIRESTORE as db} from '../../../../FirebaseConfig';
 import {FIRESTORE} from '../../../../FirebaseConfig';
-import {getDocs, collection, addDoc, Timestamp} from 'firebase/firestore';
+import {
+  getDocs,
+  collection,
+  addDoc,
+  doc,
+  Timestamp,
+  deleteDoc,
+} from 'firebase/firestore';
 import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {isAfter, startOfToday} from 'date-fns';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 interface Event {
   eventId: string;
@@ -23,8 +35,16 @@ interface Event {
   description: string;
   count: number;
 }
+type RootStackParamList = {
+  ViewCalendarScreen: undefined;
+  SetSpecials: undefined;
+  // ... other route names
+};
+type SetCalendarProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'ViewCalendarScreen'>;
+};
 
-const SetCalendar: React.FC = () => {
+const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
   const {barType} = useAuth();
   const [events, setEvents] = useState<Event[]>([]);
   const [eventName, setEventName] = useState('');
@@ -50,6 +70,8 @@ const SetCalendar: React.FC = () => {
         return 'Tapp Room';
       case 'HS':
         return 'Howard Station';
+      case 'FE':
+        return 'Fizz ED';
       default:
         return ''; // Default case if barType does not match
     }
@@ -82,6 +104,17 @@ const SetCalendar: React.FC = () => {
       }
     }
   };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ViewCalendarScreen')}
+          style={styles.button}>
+          <Text style={styles.buttonText}>View Calendar</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   const fetchEvents = useCallback(async () => {
     if (barType) {
@@ -124,16 +157,13 @@ const SetCalendar: React.FC = () => {
         .slice(0, 5)}`,
     );
   };
-  const deleteEvent = async eventId => {
+
+  const deleteEvent = async (eventId: string) => {
     try {
-      await db
-        .collection('Calendar')
-        .doc(barType)
-        .collection('Events')
-        .doc(eventId)
-        .delete();
+      const eventRef = doc(db, 'Calendar', barType, 'Events', eventId);
+      await deleteDoc(eventRef);
       console.log('Event deleted!');
-      fetchEvents(); // Refresh the events list after deleting
+      fetchEvents(); // Refresh the events list after deletion
     } catch (error) {
       console.error('Error deleting event: ', error);
     }
@@ -146,68 +176,88 @@ const SetCalendar: React.FC = () => {
     ]);
   };
 
+  const today = startOfToday(); // Get the start of today's date
+  const futureEvents = events.filter(
+    item => item.date && isAfter(item.date.toDate(), today),
+  );
+
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.formContainer}>
-        <TextInput
-          placeholder="Event Name"
-          value={eventName}
-          onChangeText={setEventName}
-          style={styles.input}
-        />
-
-        <View style={styles.centeredContainer}>
-          <DateTimePicker
-            value={selectedDateTime}
-            mode="date"
-            display="default"
-            onChange={onDateChange}
+      <TouchableWithoutFeedback onPress={dismissKeyboard}>
+        <View style={styles.formContainer}>
+          <TextInput
+            placeholder="Event Name"
+            value={eventName}
+            onChangeText={setEventName}
+            style={styles.input}
+            placeholderTextColor="#000000"
           />
-        </View>
-        <View style={styles.centeredContainer}>
-          <DateTimePicker
-            value={selectedDateTime}
-            mode="time"
-            display="default"
-            onChange={onTimeChange}
-          />
-        </View>
 
-        {/* Display Selected Date and Time */}
-        <Text style={styles.selectedDateTime}>
-          Selected: {displayDate} {displayTime}
-        </Text>
-
-        <TextInput
-          placeholder="Description"
-          value={eventDescription}
-          onChangeText={setEventDescription}
-          style={styles.input}
-        />
-        <Button title="Post Event" onPress={postEvent} />
-      </View>
-
-      <FlatList
-        data={events}
-        keyExtractor={item => item.eventId}
-        renderItem={({item}) => (
-          <View style={styles.eventContainer}>
-            <View style={styles.eventDetails}>
-              <Text style={styles.eventName}>{item.name}</Text>
-              <Text>Date: {item.date.toDate().toLocaleDateString()}</Text>
-              <Text>Time: {item.date.toDate().toLocaleTimeString()}</Text>
-              <Text>Description: {item.description}</Text>
-              <Text>Attendance: {item.count}</Text>
-            </View>
-            <Icon
-              name="delete"
-              size={24}
-              color="#FF0000"
-              onPress={() => confirmDelete(item.eventId)}
-              style={styles.deleteIcon}
+          <View style={styles.centeredContainer}>
+            <DateTimePicker
+              value={selectedDateTime}
+              mode="date"
+              display="default"
+              onChange={onDateChange}
             />
           </View>
-        )}
+          <View style={styles.centeredContainer}>
+            <DateTimePicker
+              value={selectedDateTime}
+              mode="time"
+              display="default"
+              onChange={onTimeChange}
+            />
+          </View>
+
+          {/* Display Selected Date and Time */}
+          <Text style={styles.selectedDateTime}>
+            Selected: {displayDate} {displayTime}
+          </Text>
+
+          <TextInput
+            placeholder="Description"
+            value={eventDescription}
+            onChangeText={setEventDescription}
+            style={styles.input}
+            placeholderTextColor="#000000"
+          />
+          <Button title="Post Event" onPress={postEvent} />
+        </View>
+      </TouchableWithoutFeedback>
+      <FlatList
+        data={futureEvents}
+        keyExtractor={item => item.eventId}
+        renderItem={({item}) => {
+          const eventDate = item.date ? item.date.toDate() : null;
+          return (
+            <View style={styles.eventContainer}>
+              <View style={styles.eventDetails}>
+                <Text style={styles.eventName}>{item.name}</Text>
+                <Text>
+                  Date: {eventDate ? eventDate.toLocaleDateString() : ''}
+                </Text>
+                <Text>
+                  Time: {eventDate ? eventDate.toLocaleTimeString() : ''}
+                </Text>
+                <Text>Description: </Text>
+                <Text>{item.description}</Text>
+                <Text>Attendance: {item.count}</Text>
+              </View>
+              <Icon
+                name="delete"
+                size={24}
+                color="#FF0000"
+                onPress={() => confirmDelete(item.eventId)}
+                style={styles.deleteIcon}
+              />
+            </View>
+          );
+        }}
       />
     </View>
   );
@@ -266,6 +316,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#111827',
     alignSelf: 'center',
+  },
+  button: {
+    // You can adjust the padding to change the size
+    paddingVertical: 5, // Smaller vertical padding
+    paddingHorizontal: 10, // Smaller horizontal padding to make the button smaller
+    marginRight: 10, // Optional: to ensure it doesn't touch the screen edge
+    backgroundColor: 'green', // Adjust as needed
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 12, // Smaller font size
+    color: 'white', // Adjust the color as needed
   },
 });
 

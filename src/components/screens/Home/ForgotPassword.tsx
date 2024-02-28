@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {FIREBASE_AUTH} from '../../../../FirebaseConfig';
 import {sendPasswordResetEmail} from 'firebase/auth';
@@ -32,23 +34,29 @@ const ForgotPassword: React.FC = () => {
     }
   };
 
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Forgot Password</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your email"
-        placeholderTextColor="#000000"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TouchableOpacity style={styles.button} onPress={handlePasswordReset}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-      <Text style={styles.message}>{message}</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Forgot Password</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          placeholderTextColor="#000000"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TouchableOpacity style={styles.button} onPress={handlePasswordReset}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+        <Text style={styles.message}>{message}</Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

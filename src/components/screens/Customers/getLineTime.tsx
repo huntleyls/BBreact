@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {View, Text, FlatList, StyleSheet, RefreshControl} from 'react-native';
 import {FIRESTORE} from '../../../../FirebaseConfig';
 import {collection, getDocs} from 'firebase/firestore';
-
-import SmallBannerAd from '../../common/ads/SmallBannerAd';
+import SmallBannerAd2 from '../../common/ads/SmallBannerAd2';
 
 const LineTimes: React.FC = () => {
   const [lineTimes, setLineTimes] = useState<Array<any>>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    try {
       const lineTimesCollection = collection(FIRESTORE, 'linetimes');
       const querySnapshot = await getDocs(lineTimesCollection);
 
@@ -21,9 +21,21 @@ const LineTimes: React.FC = () => {
         });
       });
       setLineTimes(times);
-    };
-    fetchData();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setRefreshing(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
 
   return (
     <View style={styles.container}>
@@ -37,8 +49,11 @@ const LineTimes: React.FC = () => {
             </Text>
           </View>
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
       />
-      <SmallBannerAd />
+      <SmallBannerAd2 />
     </View>
   );
 };
