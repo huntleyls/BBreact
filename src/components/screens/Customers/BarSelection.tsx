@@ -50,7 +50,7 @@ const barsData: BarInfo[] = [
     },
     address: '489 W King St, Boone, NC 28607',
   },
-  {
+  /*{
     bartype: 'LILY',
     name: "Lily's snack bar",
     phone: '(828) 386-6411',
@@ -64,7 +64,7 @@ const barsData: BarInfo[] = [
       Saturday: '12 PM - 2 AM',
     },
     address: '455 Blowing Rock Rd, Boone, NC 28607',
-  },
+  },*/
   {
     bartype: 'FE',
     name: 'Fizz ED',
@@ -111,7 +111,7 @@ const barsData: BarInfo[] = [
     address: '957 Rivers St, Boone, NC 28607',
   },
 
-  /*{
+  {
     bartype: 'TAPP',
     name: 'The Tapp Room',
     phone: '123-456-7890',
@@ -125,7 +125,7 @@ const barsData: BarInfo[] = [
       Saturday: '11:30 AM - 2 AM',
     },
     address: '421 Blowing Rock Rd, Boone, NC 28607',
-  },*/
+  },
 ];
 
 const BarTypeSelection = ({navigation}: BarSelectionProps) => {

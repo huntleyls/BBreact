@@ -10,6 +10,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  Switch,
 } from 'react-native';
 import {useAuth} from '../../common/hooks/useAuth';
 import {FIRESTORE as db} from '../../../../FirebaseConfig';
@@ -25,7 +26,7 @@ import {
 import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {isAfter, startOfToday} from 'date-fns';
+import {isAfter, startOfToday, addWeeks} from 'date-fns';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 interface Event {
@@ -59,19 +60,21 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
   const displayTime = `${String(displayHours).padStart(2, '0')}:${String(
     minutes,
   ).padStart(2, '0')} ${ampm}`;
-
+  const [isRecurring, setIsRecurring] = useState(false);
   const getBarName = type => {
     switch (type) {
       case 'BS':
         return 'Boone Saloon';
       case 'RSAH':
         return 'Rivers Street Ale House';
-      case 'TAPP':
-        return 'Tapp Room';
+      //case 'TAPP':
+      //return 'Tapp Room';
       case 'HS':
         return 'Howard Station';
       case 'FE':
         return 'Fizz ED';
+      case 'LILY':
+        return "Lily's Snack Bar";
       default:
         return ''; // Default case if barType does not match
     }
@@ -80,24 +83,39 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
   const postEvent = async () => {
     if (eventName && barType) {
       const eventRef = collection(db, 'Calendar', barType, 'Events');
-      const timestamp = Timestamp.fromDate(selectedDateTime); // Use selectedDateTime directly
       const barName = getBarName(barType);
+      const timestamp = Timestamp.fromDate(selectedDateTime); // Use selectedDateTime directly
       try {
-        await addDoc(eventRef, {
-          name: eventName,
-          date: timestamp,
-          description: eventDescription,
-          count: 0,
-          barName: barName,
-        });
+        if (isRecurring) {
+          // Create an event for each week for a year
+          const numberOfWeeks = 12;
+          for (let i = 0; i < numberOfWeeks; i++) {
+            const eventDate = addWeeks(selectedDateTime, i);
+            const timestamp = Timestamp.fromDate(eventDate);
+            await addDoc(eventRef, {
+              name: eventName,
+              date: timestamp,
+              description: eventDescription,
+              count: 0,
+              barName: barName,
+            });
+          }
+        } else {
+          // Create a single event
+          await addDoc(eventRef, {
+            name: eventName,
+            date: timestamp,
+            description: eventDescription,
+            count: 0,
+            barName: barName,
+          });
+        }
 
-        console.log('Event added!');
+        console.log('Event(s) added!');
         setEventName('');
         setEventDate('');
         setEventDescription('');
-
         setSelectedDateTime(new Date());
-
         fetchEvents(); // Refresh the events list after adding
       } catch (error) {
         console.error('Error adding event: ', error);
@@ -121,7 +139,7 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
       const eventsRef = collection(FIRESTORE, 'Calendar', barType, 'Events');
       const querySnapshot = await getDocs(eventsRef);
 
-      const fetchedEvents: Event[] = [];
+      let fetchedEvents: Event[] = [];
       querySnapshot.forEach(doc => {
         const eventData = doc.data();
         fetchedEvents.push({
@@ -131,6 +149,13 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
           count: eventData.count,
           description: eventData.description,
         });
+      });
+
+      // Sort the fetchedEvents array by date
+      fetchedEvents = fetchedEvents.sort((a, b) => {
+        const dateA = a.date ? a.date.toDate().getTime() : 0;
+        const dateB = b.date ? b.date.toDate().getTime() : 0;
+        return dateA - dateB;
       });
 
       setEvents(fetchedEvents);
@@ -197,27 +222,47 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
             placeholderTextColor="#000000"
           />
 
-          <View style={styles.centeredContainer}>
-            <DateTimePicker
-              value={selectedDateTime}
-              mode="date"
-              display="default"
-              onChange={onDateChange}
-            />
-          </View>
-          <View style={styles.centeredContainer}>
-            <DateTimePicker
-              value={selectedDateTime}
-              mode="time"
-              display="default"
-              onChange={onTimeChange}
-            />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              marginTop: 0,
+              marginBottom: 0,
+            }}>
+            <View style={{flex: 1, marginRight: 5}}>
+              <DateTimePicker
+                value={selectedDateTime}
+                mode="date"
+                display="default"
+                onChange={onDateChange}
+              />
+            </View>
+            <View style={{flex: 1, marginLeft: 0}}>
+              <DateTimePicker
+                value={selectedDateTime}
+                mode="time"
+                display="default"
+                onChange={onTimeChange}
+              />
+            </View>
           </View>
 
           {/* Display Selected Date and Time */}
-          <Text style={styles.selectedDateTime}>
-            Selected: {displayDate} {displayTime}
-          </Text>
+          <View style={styles.centeredContainer}>
+            <Switch
+              value={isRecurring}
+              onValueChange={setIsRecurring}
+              style={{marginBottom: 0}}
+            />
+          </View>
+          <View style={{alignItems: 'center', marginTop: 0, marginBottom: 0}}>
+            <Text>
+              {isRecurring
+                ? 'Event will repeat weekly for 3 months'
+                : 'Event is a one-time occurrence'}
+            </Text>
+          </View>
 
           <TextInput
             placeholder="Description"
@@ -229,36 +274,49 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
           <Button title="Post Event" onPress={postEvent} />
         </View>
       </TouchableWithoutFeedback>
-      <FlatList
-        data={futureEvents}
-        keyExtractor={item => item.eventId}
-        renderItem={({item}) => {
-          const eventDate = item.date ? item.date.toDate() : null;
-          return (
-            <View style={styles.eventContainer}>
-              <View style={styles.eventDetails}>
-                <Text style={styles.eventName}>{item.name}</Text>
-                <Text>
-                  Date: {eventDate ? eventDate.toLocaleDateString() : ''}
-                </Text>
-                <Text>
-                  Time: {eventDate ? eventDate.toLocaleTimeString() : ''}
-                </Text>
-                <Text>Description: </Text>
-                <Text>{item.description}</Text>
-                <Text>Attendance: {item.count}</Text>
+      <View style={{flex: 1}}>
+        <FlatList
+          contentContainerStyle={{
+            paddingTop: 0,
+            paddingBottom: 0,
+            marginTop: 0,
+            marginBottom: 0,
+            paddingHorizontal: 10,
+          }}
+          data={futureEvents}
+          keyExtractor={item => item.eventId}
+          renderItem={({item}) => {
+            const eventDate = item.date ? item.date.toDate() : null;
+            return (
+              <View style={styles.eventContainer}>
+                <View style={styles.eventDetails}>
+                  <Text style={styles.eventName}>{item.name}</Text>
+                  <Text>
+                    Date:{' '}
+                    {eventDate ? eventDate.toLocaleDateString() : 'No date'}
+                  </Text>
+                  <Text>
+                    Time:{' '}
+                    {eventDate ? eventDate.toLocaleTimeString() : 'No time'}
+                  </Text>
+                  <Text>Description: </Text>
+                  <View style={{width: 225, marginRight: 0}}>
+                    <Text style={{flexWrap: 'wrap'}}>{item.description}</Text>
+                  </View>
+                  <Text>Attendance: {item.count}</Text>
+                </View>
+                <Icon
+                  name="delete"
+                  size={24}
+                  color="#FF0000"
+                  onPress={() => confirmDelete(item.eventId)}
+                  style={styles.deleteIcon}
+                />
               </View>
-              <Icon
-                name="delete"
-                size={24}
-                color="#FF0000"
-                onPress={() => confirmDelete(item.eventId)}
-                style={styles.deleteIcon}
-              />
-            </View>
-          );
-        }}
-      />
+            );
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -273,11 +331,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
     backgroundColor: '#F3F4F6',
   },
   formContainer: {
-    marginBottom: 30,
+    marginBottom: 10,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',
     padding: 20,
@@ -301,7 +359,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: 5,
     padding: 10,
     borderRadius: 5,
     backgroundColor: '#FFFFFF',

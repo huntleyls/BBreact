@@ -42,7 +42,7 @@ const ViewCalendarScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedDate, setSelectedDate] = useState('');
   const [sections, setSections] = useState<Section[]>([]);
-  const barTypes = ['BS', 'HS', 'TAPP', 'RSAH', 'FE'];
+  const barTypes = ['BS', 'HS', 'TAPP', 'RSAH', 'FE', 'LILY'];
   const [userResponses, setUserResponses] = useState({});
 
   const fetchDatesFromFirestore = async () => {
