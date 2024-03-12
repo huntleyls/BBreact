@@ -187,9 +187,9 @@ const CalendarScreen = () => {
       bar = 'RSAH';
     } else if (sectionTitle === 'Boone Saloon') {
       bar = 'BS';
-    } /*else if (sectionTitle === 'The Tapp Room') {
+    } else if (sectionTitle === 'The Tapp Room') {
       bar = 'TAPP';
-    }*/ else if (sectionTitle === 'Howard Station') {
+    } else if (sectionTitle === 'Howard Station') {
       bar = 'HS';
     } else if (sectionTitle === 'Fizz ED') {
       bar = 'FE';

@@ -9,6 +9,7 @@ import {
   Alert,
   Keyboard,
   TouchableWithoutFeedback,
+  Switch,
 } from 'react-native';
 import {FIREBASE_AUTH, FIRESTORE} from '../../../../FirebaseConfig';
 import {createUserWithEmailAndPassword, signOut} from 'firebase/auth';
@@ -27,40 +28,45 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const auth = FIREBASE_AUTH;
   const firestore = FIRESTORE;
 
   const register = async () => {
     setLoading(true);
-    if (!password) {
-      Alert.alert('Error', 'Current password is required.');
-      return;
-    }
 
-    if (!confirmPassword) {
-      Alert.alert('Error', 'new password is required.');
+    // Check if the terms have been accepted
+    if (!termsAccepted) {
+      Alert.alert(
+        'Terms of Service',
+        'You must agree to the Terms of Service to create an account.',
+      );
+      setLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert('Error', 'passwords do not match.');
+      Alert.alert('Error', 'Passwords do not match.');
+      setLoading(false);
       return;
     }
+
     try {
       const {user} = await createUserWithEmailAndPassword(
         auth,
         email.toLowerCase(),
         password,
       );
+
       await setDoc(doc(firestore, 'users', user.uid), {
         Email: email.toLowerCase(),
         userType: 'customer',
         firstName: firstName,
         lastName: lastName,
         userID: user.uid,
+        termsAccepted: termsAccepted,
       });
-      // Sign out the user after registration
-      await signOut(auth);
+
       Alert.alert('Registration Successful', 'Please log in.');
       navigation.navigate('Welcome');
     } catch (error) {
@@ -116,6 +122,25 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
           value={lastName}
           onChangeText={setLastName}
         />
+        <View style={styles.switchContainer}>
+          <Text style={styles.switchLabel}>
+            I agree to the{' '}
+            <Text
+              style={styles.termsLink}
+              onPress={() => navigation.navigate('TermsOfService')}>
+              Terms of Service
+            </Text>
+          </Text>
+          <Switch
+            trackColor={{false: '#767577', true: '#81b0ff'}}
+            thumbColor={termsAccepted ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={() =>
+              setTermsAccepted(previousState => !previousState)
+            }
+            value={termsAccepted}
+          />
+        </View>
         {loading ? (
           <ActivityIndicator size="large" color="#001f3f" />
         ) : (
@@ -159,6 +184,22 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    marginTop: 20,
+  },
+  switchLabel: {
+    flex: 1,
+    fontSize: 16,
+    color: '#000',
+  },
+  termsLink: {
+    color: '#1B95E0', // Choose a color that suits your app's theme
+    textDecorationLine: 'underline',
   },
 });
 

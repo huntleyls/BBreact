@@ -8,6 +8,7 @@ import CustomerLoginScreen from '../components/screens/Home/CustomerLogin';
 import RegisterScreen from '../components/screens/Home/RegistrationScreen';
 import BarRegisterScreen from '../components/screens/Home/BarRegistration';
 import ForgotPassword from '../components/screens/Home/ForgotPassword';
+import TermsOfServiceScreen from '../components/screens/Home/TermsOfService';
 
 const Stack = createStackNavigator();
 
@@ -79,6 +80,17 @@ export default function AuthStack() {
         component={ForgotPassword}
         options={{
           headerTitle: ' ',
+          headerTintColor: '#001f3f',
+          headerStyle: {
+            backgroundColor: '#f5f5f5',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="TermsOfService"
+        component={TermsOfServiceScreen}
+        options={{
+          headerTitle: 'Terms of Service',
           headerTintColor: '#001f3f',
           headerStyle: {
             backgroundColor: '#f5f5f5',
