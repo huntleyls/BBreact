@@ -11,6 +11,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   Switch,
+  Platform,
 } from 'react-native';
 import {useAuth} from '../../common/hooks/useAuth';
 import {FIRESTORE as db} from '../../../../FirebaseConfig';
@@ -61,6 +62,42 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
     minutes,
   ).padStart(2, '0')} ${ampm}`;
   const [isRecurring, setIsRecurring] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+
+  // Function to format date and time for display
+  const formatDate = (date: Date) => {
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  };
+
+  const formatTime = (date: Date) => {
+    // Example format: "HH:MM AM/PM"
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12; // Converts to 12-hour format
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+  };
+
+  const onDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    const currentDate = selectedDate || selectedDateTime;
+    setShowDatePicker(false); // Immediately hide the DatePicker after selection
+    if (selectedDate) {
+      // Check if a date was indeed selected
+      setSelectedDateTime(currentDate);
+    }
+  };
+
+  const onTimeChange = (event: DateTimePickerEvent, selectedTime?: Date) => {
+    const currentTime = selectedTime || selectedDateTime;
+    setShowTimePicker(false); // Immediately hide the TimePicker after selection
+    if (selectedTime) {
+      // Check if a time was indeed selected
+      setSelectedDateTime(currentTime);
+    }
+  };
+
   const getBarName = type => {
     switch (type) {
       case 'BS':
@@ -166,23 +203,6 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
     fetchEvents();
   }, [fetchEvents, barType]);
 
-  const onDateChange = (_event: DateTimePickerEvent, selectedDate?: Date) => {
-    const currentDate = selectedDate || selectedDateTime;
-    setSelectedDateTime(currentDate);
-  };
-
-  const onTimeChange = (_event: DateTimePickerEvent, selectedTime?: Date) => {
-    const currentTime = selectedTime || selectedDateTime;
-
-    setSelectedDateTime(currentTime);
-
-    setEventDate(
-      `${selectedDateTime.toISOString().split('T')[0]} ${currentTime
-        .toTimeString()
-        .slice(0, 5)}`,
-    );
-  };
-
   const deleteEvent = async (eventId: string) => {
     try {
       const eventRef = doc(db, 'Calendar', barType, 'Events', eventId);
@@ -210,6 +230,55 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
     Keyboard.dismiss();
   };
 
+  const renderDateTimePicker = (mode: 'date' | 'time') => {
+    if (Platform.OS === 'android') {
+      return (
+        <View>
+          <Button
+            title={
+              mode === 'date'
+                ? `Date: ${formatDate(selectedDateTime)}`
+                : `Time: ${formatTime(selectedDateTime)}`
+            }
+            onPress={() =>
+              mode === 'date'
+                ? setShowDatePicker(true)
+                : setShowTimePicker(true)
+            }
+          />
+          {mode === 'date' && showDatePicker && (
+            <DateTimePicker
+              value={selectedDateTime}
+              mode={mode}
+              display="default"
+              onChange={onDateChange}
+              onTouchCancel={() => setShowDatePicker(false)}
+            />
+          )}
+          {mode === 'time' && showTimePicker && (
+            <DateTimePicker
+              value={selectedDateTime}
+              mode={mode}
+              display="default"
+              onChange={onTimeChange}
+              onTouchCancel={() => setShowTimePicker(false)}
+            />
+          )}
+        </View>
+      );
+    } else {
+      // For iOS, always show the picker
+      return (
+        <DateTimePicker
+          value={selectedDateTime}
+          mode={mode}
+          display="default"
+          onChange={mode === 'date' ? onDateChange : onTimeChange}
+        />
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -231,20 +300,12 @@ const SetCalendar: React.FC<SetCalendarProps> = ({navigation}) => {
               marginBottom: 0,
             }}>
             <View style={{flex: 1, marginRight: 5}}>
-              <DateTimePicker
-                value={selectedDateTime}
-                mode="date"
-                display="default"
-                onChange={onDateChange}
-              />
+              {renderDateTimePicker('date')}
             </View>
             <View style={{flex: 1, marginLeft: 0}}>
-              <DateTimePicker
-                value={selectedDateTime}
-                mode="time"
-                display="default"
-                onChange={onTimeChange}
-              />
+              <View style={styles.timePickerButtonContainer}>
+                {renderDateTimePicker('time')}
+              </View>
             </View>
           </View>
 
@@ -387,6 +448,19 @@ const styles = StyleSheet.create({
     fontSize: 12, // Smaller font size
     color: 'white', // Adjust the color as needed
   },
+  datePickerButtonContainer: Platform.select({
+    ios: {
+      marginBottom: 20, // Adjust the margin as needed for iOS
+    },
+    android: {},
+  }),
+
+  timePickerButtonContainer: Platform.select({
+    ios: {
+      marginRight: 40, // Adjust the margin as needed for iOS
+    },
+    android: {},
+  }),
 });
 
 export default SetCalendar;

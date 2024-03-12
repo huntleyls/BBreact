@@ -21,7 +21,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {zonedTimeToUtc, format} from 'date-fns-tz';
 
 import SmallBannerAd3 from '../../common/ads/SmallBannerAd3';
-import {startOfDay, endOfDay} from 'date-fns';
+import {
+  endOfDay,
+  isBefore,
+  startOfDay,
+  parseISO,
+  isToday,
+  isAfter,
+} from 'date-fns';
 
 interface Event {
   eventId: string;
@@ -42,12 +49,13 @@ const ViewCalendarScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedDate, setSelectedDate] = useState('');
   const [sections, setSections] = useState<Section[]>([]);
-  const barTypes = ['BS', 'HS', 'TAPP', 'RSAH', 'FE', 'LILY'];
+  const barTypes = ['BS', 'HS', 'RSAH', 'FE', 'LILY'];
   const [userResponses, setUserResponses] = useState({});
 
   const fetchDatesFromFirestore = async () => {
     try {
       let newMarkedDates = {};
+      const today = new Date(); // Capture today's date for comparison
 
       for (const barType of barTypes) {
         const eventsCollectionRef = collection(
@@ -60,20 +68,25 @@ const ViewCalendarScreen = () => {
 
         querySnapshot.forEach(doc => {
           const data = doc.data();
-          const originalDate = data.date.toDate();
+          if (data.date && data.date.toDate) {
+            const originalDate = data.date.toDate(); // Convert Firestore timestamp to Date
+            const timeZone = 'America/New_York';
+            const estDate = zonedTimeToUtc(originalDate, timeZone);
+            const dateStr = format(estDate, 'yyyy-MM-dd', {timeZone: 'UTC'});
+            const dateToCompare = parseISO(dateStr);
 
-          // Convert the Firestore timestamp to EST
-          const timeZone = 'America/New_York';
-          const estDate = zonedTimeToUtc(originalDate, timeZone);
-
-          // Format the date to YYYY-MM-DD
-          const date = format(estDate, 'yyyy-MM-dd', {timeZone: 'UTC'});
-
-          // Ensure each date only marked once, but update if already present (in case of multiple events on the same day)
-          newMarkedDates[date] = {marked: true, dotColor: 'blue'};
+            // Only mark the date if it is today or in the future
+            if (isToday(dateToCompare) || isAfter(dateToCompare, today)) {
+              newMarkedDates[dateStr] = {marked: true, dotColor: 'blue'};
+            }
+          } else {
+            console.warn(
+              `Document ${doc.id} does not have a valid 'date' field.`,
+            );
+          }
         });
       }
-      console.log('newMarkedDates:', newMarkedDates);
+      console.log('Filtered newMarkedDates:', newMarkedDates);
       setMarkedDates(newMarkedDates);
     } catch (error) {
       console.error('Error fetching dates:', error);
@@ -93,8 +106,20 @@ const ViewCalendarScreen = () => {
 
   const fetchEventsForDate = async dateString => {
     try {
-      const eventsByBar = {};
+      // Parse the selected date string to a Date object
+      const selectedDate = parseISO(dateString);
 
+      // Get today's date at the start of the day for comparison
+      const today = startOfDay(new Date());
+
+      // Check if selectedDate is before today, return early if true
+      if (isBefore(selectedDate, today)) {
+        console.log('Selected date is in the past. No events to fetch.');
+        setSections([]); // Clear any existing sections
+        return;
+      }
+
+      const eventsByBar = {};
       // Set the timezone explicitly to Eastern Standard Time (EST)
       const timeZone = 'America/New_York';
 
@@ -168,6 +193,8 @@ const ViewCalendarScreen = () => {
       bar = 'HS';
     } else if (sectionTitle === 'Fizz ED') {
       bar = 'FE';
+    } else if (sectionTitle === "Lily's Snack Bar") {
+      bar = 'LILY';
     } else {
       console.error('Unknown section title');
       return;
