@@ -9,6 +9,7 @@ import RegisterScreen from '../components/screens/Home/RegistrationScreen';
 import BarRegisterScreen from '../components/screens/Home/BarRegistration';
 import ForgotPassword from '../components/screens/Home/ForgotPassword';
 import TermsOfServiceScreen from '../components/screens/Home/TermsOfService';
+import PrivacyPolicyScreen from '../components/screens/Home/PrivacyPolicy';
 
 const Stack = createStackNavigator();
 
@@ -91,6 +92,17 @@ export default function AuthStack() {
         component={TermsOfServiceScreen}
         options={{
           headerTitle: 'Terms of Service',
+          headerTintColor: '#001f3f',
+          headerStyle: {
+            backgroundColor: '#f5f5f5',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{
+          headerTitle: 'Privacy Policy',
           headerTintColor: '#001f3f',
           headerStyle: {
             backgroundColor: '#f5f5f5',
