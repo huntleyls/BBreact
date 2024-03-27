@@ -1,10 +1,27 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, FlatList, StyleSheet, RefreshControl} from 'react-native';
+import React, {useState, useEffect, useCallback, useLayoutEffect} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import {FIRESTORE} from '../../../../FirebaseConfig';
 import {collection, getDocs} from 'firebase/firestore';
 import SmallBannerAd2 from '../../common/ads/SmallBannerAd2';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-const LineTimes: React.FC = () => {
+type RootStackParamList = {
+  ViewCalendarScreen: undefined;
+  SetSpecials: undefined;
+  // ... other route names
+};
+type getLineTimeProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'AddLineTime'>;
+};
+
+const LineTimes: React.FC<getLineTimeProps> = ({navigation}) => {
   const [lineTimes, setLineTimes] = useState<Array<any>>([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -36,6 +53,27 @@ const LineTimes: React.FC = () => {
     setRefreshing(true);
     fetchData();
   };
+
+  useLayoutEffect(() => {
+    const currentHour = new Date().getHours();
+
+    // If the current hour is between 8 PM and 2 AM
+    if (currentHour >= 10 || currentHour < 2) {
+      navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AddLineTime')}
+            style={styles.button}>
+            <Text style={styles.buttonText}>View Calendar</Text>
+          </TouchableOpacity>
+        ),
+      });
+    } else {
+      navigation.setOptions({
+        headerRight: () => null, // No button outside the time range
+      });
+    }
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
